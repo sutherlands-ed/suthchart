@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>suthchart QuickTest</title>
+	<script src="../../../lib/CoffeeScript/coffee-script.js"></script>
+	<script type="text/coffeescript" src="../../main/coffee/Drawing.coffee"></script>
+	<script type="text/coffeescript" src="../../main/coffee/SVGRenderer.coffee"></script>
+	<script type="text/coffeescript" src="../../main/coffee/VMLRenderer.coffee"></script>
+	<style> .rvml { BEHAVIOR: url(#default#VML) } </style>
+</head>
+<body>
+	<div id="graphVML" style="float:right;"></div><div id="graphSVG"></div>
+	<script type="text/coffeescript">
+		randomCoord = () -> Math.random() * 500
+		randomRadius = () -> Math.random() * 20
+
+		drawing = suthchart.Drawing()
+		for i in [0..50]
+			line = drawing.line(randomCoord(),randomCoord(), randomCoord(),randomCoord())
+			drawing.add(line)
+		for i in [0..50]
+			circle = drawing.circle(randomCoord(),randomCoord(), randomRadius())
+			drawing.add(circle)
+
+		document.getElementById('graphSVG').innerHTML = drawing.svg()
+
+		document.getElementById('graphVML').innerHTML = drawing.vml()
+	</script>
+</body>
+</html>

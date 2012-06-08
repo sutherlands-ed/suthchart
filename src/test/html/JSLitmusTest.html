@@ -1,26 +1,39 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+	<title>suthchart Test</title>
 	<script type="text/javascript" src="../../../lib/JSLitmus/JSLitmus.js"></script>
 
 	<!-- include source files here... -->
 	<script src="../../../lib/CoffeeScript/coffee-script.js"></script>
-	<script type="text/coffee-script" src="../../main/coffee/Draw.coffee"></script>
-	<script type="text/coffee-script" src="../../main/coffee/DrawSVG.coffee"></script>
-	<script type="text/coffee-script" src="../../main/coffee/DrawVML.coffee"></script>
+	<script type="text/coffeescript" src="../../main/coffee/Drawing.coffee"></script>
+	<script type="text/coffeescript" src="../../main/coffee/SVGRenderer.coffee"></script>
+	<script type="text/coffeescript" src="../../main/coffee/VMLRenderer.coffee"></script>
 </head>
 <body>
 	<div id="graphVML" style="float:right;"></div><div id="graphSVG"></div>
 	<script type="text/javascript">
 
+		var drawing;
+
+		var random = function() {
+			Math.random() * 500;
+		};
+
+		JSLitmus.test('Drawing Test', function() {
+			drawing = suthchart.Drawing();
+			for (var i = 50; i > 0; i--) {
+				line = drawing.line(random,random, random,random);
+				drawing.add(line);
+			};
+		});
+
 		JSLitmus.test('SVG Test', function() {
-			var html = [];
-			document.getElementById('graphSVG').innerHTML = html.join('');
+			document.getElementById('graphSVG').innerHTML = drawing.svg();
 		});
 
 		JSLitmus.test('VML Test', function() {
-			var html = [];
-			document.getElementById('graphVML').innerHTML = html.join('');
+			document.getElementById('graphVML').innerHTML = drawing.vml();
 		});
 
 	</script>
