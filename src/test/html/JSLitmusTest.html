@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/javascript" src="../../../lib/JSLitmus/JSLitmus.js"></script>
+
+	<!-- include source files here... -->
+	<script src="../../../lib/CoffeeScript/coffee-script.js"></script>
+	<script type="text/coffee-script" src="../../main/coffee/Draw.coffee"></script>
+	<script type="text/coffee-script" src="../../main/coffee/DrawSVG.coffee"></script>
+	<script type="text/coffee-script" src="../../main/coffee/DrawVML.coffee"></script>
+</head>
+<body>
+	<div id="graphVML" style="float:right;"></div><div id="graphSVG"></div>
+	<script type="text/javascript">
+
+		JSLitmus.test('SVG Test', function() {
+			var html = [];
+			document.getElementById('graphSVG').innerHTML = html.join('');
+		});
+
+		JSLitmus.test('VML Test', function() {
+			var html = [];
+			document.getElementById('graphVML').innerHTML = html.join('');
+		});
+
+	</script>
+</body>
+</html>
