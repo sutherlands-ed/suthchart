@@ -47,6 +47,19 @@ class Drawing
       opacity: opacity
     }
 
+  text: (x, y, text, fontFamily = 'Arial', fontSize = 16, color = '#555', textAnchor = 'middle', style = '') ->
+    {
+      type: 'text'
+      x: x
+      y: y
+      text: text
+      textAnchor: textAnchor
+      fontFamily: fontFamily
+      fontSize: fontSize
+      color: color
+      style: style
+    }
+
   svg: () ->
     suthchart.SVGRenderer.render(this)
 

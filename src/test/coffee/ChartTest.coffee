@@ -45,7 +45,7 @@ drawGraph = () ->
     Math.round(r)+0.5 # Align on path to generate sharp lines
 
   # Title
-  # paper.text(graphWidth / 2, 20, title).attr(titleTextAttr)
+  drawing.add(drawing.text(graphWidth / 2, 20, title, 'arial', 16, '#555'))
 
   # X Grid
   for x in [xAxis.min..xAxis.max] by xAxis.minorStep
@@ -65,7 +65,7 @@ drawGraph = () ->
     drawing.add(drawing.line(sx(x), sy(0)-2, sx(x), sy(0)+2))
   for x in [xAxis.min..xAxis.max] by xAxis.majorStep
     drawing.add(drawing.line(sx(x), sy(0)-4, sx(x), sy(0)+4))
-    # paper.text(sx(x), sy(0) + 10, x.toString()).attr(axisTextAttr)
+    drawing.add(drawing.text(sx(x), sy(0) + 10, x.toString(), 'arial', 10, '#888'))
 
   # Y Axis
   drawing.add(drawing.line(sx(0)-0.5, sy(yAxis.max)-0.5, sx(0)-0.5, sy(yAxis.min)-0.5, 2))
@@ -73,11 +73,11 @@ drawGraph = () ->
     drawing.add(drawing.line(sx(0)-2, sy(y), sx(0)+2, sy(y)))
   for y in [yAxis.min..yAxis.max] by yAxis.majorStep
     drawing.add(drawing.line(sx(0)-4, sy(y), sx(0)+4, sy(y)))
-    # paper.text(sx(0)-15, sy(y), y.toString()).attr(axisTextAttr)
+    drawing.add(drawing.text(sx(0)-15, sy(y), y.toString(), 'arial', 10, '#888'))
 
 
   # X Axis Title
-  # paper.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title).attr(axisTitleTextAttr)
+  drawing.add(drawing.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title, 'arial', 12, '#888'))
 
   # Y Axis Title
   # paper.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).attr(axisTitleTextAttr).transform("r270")
