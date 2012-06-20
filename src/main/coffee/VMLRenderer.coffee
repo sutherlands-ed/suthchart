@@ -12,6 +12,23 @@ class VMLRenderer
     switch e.type
       when 'circle'
         """<rvml:oval class="rvml" style="position:absolute;left:#{e.x-e.r+0.5}px;top:#{e.y-e.r+0.5}px;width:#{e.r * 2}px;height:#{e.r * 2}px;" strokecolor="#{e.strokeColor}" fillcolor="#{e.fillColor}"><rvml:stroke class="rvml" opacity="#{e.opacity}" miterlimit="8"></rvml:stroke><rvml:fill class="rvml" type="solid" opacity="#{e.opacity}"></rvml:fill></rvml:oval>"""
+      when 'curve'
+        points = if (e.crispEdges)
+          crisp = crispEdgeFunction(e.strokeWidth)
+          _.map(e.points, (i) ->
+            [crisp(i[0]), crisp(i[1])]
+          )
+        else
+          round = (x) -> Math.round(x)
+          _.map(e.points, (i) ->
+            [round(i[0]), round(i[1])]
+          )
+        first = _.first(points)
+        rest = _.rest(points)
+        lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
+        last = _.last(points)
+        path = "m" + first + "c" + lines + "," + last + " e"
+        """<rvml:shape class="rvml" style="position:absolute;width:1px;height:1px;top:0px;left:0px" coordsize="1,1" filled="f" stroked="t" strokecolor="black" strokeweight="1pt" path="#{path}"><rvml:stroke class="rvml" opacity="9830f" miterlimit="8"></rvml:stroke><rvml:fill class="rvml"></rvml:fill></rvml:shape>"""
       when 'line'
         if (e.crispEdges)
           crisp = crispEdgeFunction(e.strokeWidth)

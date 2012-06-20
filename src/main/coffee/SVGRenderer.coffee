@@ -13,10 +13,16 @@ class SVGRenderer
       when 'circle'
         """<circle cx="#{e.x}" cy="#{e.y}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
       when 'curve'
-        crisp = crispEdgeFunction(e.strokeWidth)
-        points = _.map(e.points, (i) ->
-          [crisp(i[0]), crisp(i[1])]
-        )
+        points = if (e.crispEdges)
+          crisp = crispEdgeFunction(e.strokeWidth)
+          _.map(e.points, (i) ->
+            [crisp(i[0]), crisp(i[1])]
+          )
+        else
+          round = (x) -> Math.round(x*10) / 10
+          _.map(e.points, (i) ->
+            [round(i[0]), round(i[1])]
+          )
         first = _.first(points)
         rest = _.rest(points)
         lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
