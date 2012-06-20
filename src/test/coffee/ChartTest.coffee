@@ -16,10 +16,6 @@ drawGraph = () ->
 
   window.mydata = data # to aid debugging
   window.mycurves = curves # to aid debugging
-
-  titleTextAttr = { 'font-size': "16px", 'font-family': "arial", fill: '#555' }
-  axisTitleTextAttr = { 'font-size': "12px", 'font-family': "arial", fill: '#888' }
-  axisTextAttr = { 'font-size': "10px", 'font-family': "arial", fill: '#888' }
   
   pointsx = _.map(data, (d) -> parseFloat(d[7]))
   pointsy = _.map(data, (d) -> parseFloat(d[9]))
@@ -45,19 +41,19 @@ drawGraph = () ->
     Math.round(r)+0.5 # Align on path to generate sharp lines
 
   # Title
-  drawing.add(drawing.text(graphWidth / 2, 20, title, 'arial', 16, '#555'))
+  drawing.add(drawing.text(graphWidth / 2, 20, title).withFont('Arial', 16).withStrokeColor('#555'))
 
   # X Grid
   for x in [xAxis.min..xAxis.max] by xAxis.minorStep
-    drawing.add(drawing.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max), 0.1))
+    drawing.add(drawing.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.1))
   for x in [xAxis.min..xAxis.max] by xAxis.majorStep
-    drawing.add(drawing.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max), 0.2))
+    drawing.add(drawing.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.2))
 
   # Y Grid
   for y in [yAxis.min..yAxis.max] by yAxis.minorStep
-    drawing.add(drawing.line(sx(0), sy(y), sx(xAxis.max), sy(y), 0.1))
+    drawing.add(drawing.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.1))
   for y in [yAxis.min..yAxis.max] by yAxis.majorStep
-    drawing.add(drawing.line(sx(0), sy(y), sx(xAxis.max), sy(y), 0.2))
+    drawing.add(drawing.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.2))
 
   # X Axis
   drawing.add(drawing.line(sx(0)-0.5, sy(0)-0.5, sx(xAxis.max)-0.5, sy(0)-0.5, 2))
@@ -65,19 +61,19 @@ drawGraph = () ->
     drawing.add(drawing.line(sx(x), sy(0)-2, sx(x), sy(0)+2))
   for x in [xAxis.min..xAxis.max] by xAxis.majorStep
     drawing.add(drawing.line(sx(x), sy(0)-4, sx(x), sy(0)+4))
-    drawing.add(drawing.text(sx(x), sy(0) + 10, x.toString(), 'arial', 10, '#888'))
+    drawing.add(drawing.text(sx(x), sy(0) + 10, x.toString()).withFont('Arial', 10).withStrokeColor('#888'))
 
   # Y Axis
-  drawing.add(drawing.line(sx(0)-0.5, sy(yAxis.max)-0.5, sx(0)-0.5, sy(yAxis.min)-0.5, 2))
+  drawing.add(drawing.line(sx(0)-0.5, sy(yAxis.max)-0.5, sx(0)-0.5, sy(yAxis.min)-0.5).withStrokeWidth(2))
   for y in [yAxis.min..yAxis.max] by yAxis.minorStep
     drawing.add(drawing.line(sx(0)-2, sy(y), sx(0)+2, sy(y)))
   for y in [yAxis.min..yAxis.max] by yAxis.majorStep
     drawing.add(drawing.line(sx(0)-4, sy(y), sx(0)+4, sy(y)))
-    drawing.add(drawing.text(sx(0)-15, sy(y), y.toString(), 'arial', 10, '#888'))
+    drawing.add(drawing.text(sx(0)-15, sy(y), y.toString()).withFont('Arial', 10).withStrokeColor('#888'))
 
 
   # X Axis Title
-  drawing.add(drawing.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title, 'arial', 12, '#888'))
+  drawing.add(drawing.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title).withFont('Arial', 12).withStrokeColor('#888'))
 
   # Y Axis Title
   # paper.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).attr(axisTitleTextAttr).transform("r270")
@@ -98,7 +94,7 @@ drawGraph = () ->
 
   # Points
   for p,i in pointsx
-    c = drawing.add(drawing.circle(sx(pointsx[i]), sy(pointsy[i]), dotSize, 1, '#000', '#888', 0.5)) # .attr({fill: "#888", opacity: 0.5})
+    c = drawing.add(drawing.circle(sx(pointsx[i]), sy(pointsy[i]), dotSize).withStroke(1, '#000').withFill('#888').withOpacity(0.5)) # .attr({fill: "#888", opacity: 0.5})
     # c.id = i
     # popup = null
     # label = null

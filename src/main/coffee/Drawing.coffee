@@ -11,54 +11,13 @@ class Drawing
   add: (element) ->
     @elements.push(element)
 
-  circle: (x,y,r, width = 1, strokeColor = '#000', fillColor = '#fff', opacity = 1) ->
-    {
-      type: 'circle'
-      x: x
-      y: y
-      r: r
-      strokeWidth: width
-      strokeColor: strokeColor
-      fillColor: fillColor
-      opacity: opacity
-    }
+  circle: (x,y,r) -> new suthchart.Circle(x,y,r)
 
-  line: (x1,y1, x2,y2, width = 1, color = '#000') ->
-    {
-      type: 'line'
-      x1: x1
-      y1: y1
-      x2: x2
-      y2: y2
-      strokeWidth: width
-      strokeColor: color
-    }
+  line: (x1,y1, x2,y2) -> new suthchart.Line(x1,y1, x2,y2)
 
-  oval: (x,y, rx,ry, width = 1, strokeColor = '#000', fillColor = '#fff', opacity = 1) ->
-    {
-      type: 'oval'
-      x: x
-      y: y
-      rx: rx
-      ry: ry
-      strokeWidth: width
-      strokeColor: strokeColor
-      fillColor: fillColor
-      opacity: opacity
-    }
+  oval: (x,y, rx,ry) -> new suthchart.Oval(x,y, rx,ry)
 
-  text: (x, y, text, fontFamily = 'Arial', fontSize = 16, color = '#555', textAnchor = 'middle', style = '') ->
-    {
-      type: 'text'
-      x: x
-      y: y
-      text: text
-      textAnchor: textAnchor
-      fontFamily: fontFamily
-      fontSize: fontSize
-      color: color
-      style: style
-    }
+  text: (x, y, text) -> new suthchart.Text(x, y, text)
 
   svg: () ->
     suthchart.SVGRenderer.render(this)

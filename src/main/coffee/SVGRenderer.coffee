@@ -18,7 +18,7 @@ class SVGRenderer
         """<ellipse cx="#{e.x}" cy="#{e.y}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
       when 'text'
         # style="text-anchor:middle; font-style:normal; font-variant:normal; font-weight:normal; font-size:16px; line-height:normal; font-family:arial"
-        """<text x="#{e.x}" y="#{e.y}" style="#{e.style}" text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.color}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}"><tspan dy="#{e.fontSize * 0.35}">#{e.text}</tspan></text>"""
+        """<text x="#{e.x}" y="#{e.y}" style="#{e.style}" text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.strokeColor}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}"><tspan dy="#{e.fontSize * 0.35}">#{e.text}</tspan></text>"""
       else
         console.log("Unhandled element type: #{e.type}")
 
