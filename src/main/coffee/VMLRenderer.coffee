@@ -13,7 +13,11 @@ class VMLRenderer
       when 'circle'
         """<rvml:oval class="rvml" style="position:absolute;left:#{e.x-e.r+0.5}px;top:#{e.y-e.r+0.5}px;width:#{e.r * 2}px;height:#{e.r * 2}px;" strokecolor="#{e.strokeColor}" fillcolor="#{e.fillColor}"><rvml:stroke class="rvml" opacity="#{e.opacity}" miterlimit="8"></rvml:stroke><rvml:fill class="rvml" type="solid" opacity="#{e.opacity}"></rvml:fill></rvml:oval>"""
       when 'line'
-        """<rvml:line class="rvml" from="#{e.x1+0.5}px,#{e.y1+0.5}px" to="#{e.x2+0.5}px,#{e.y2+0.5}px" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px"><rvml:stroke class="rvml" opacity="#{e.strokeWidth}" miterlimit="8"></rvml:stroke></rvml:line>"""
+        if (e.crispEdges)
+          crisp = crispEdgeFunction(e.strokeWidth)
+          """<rvml:line class="rvml" from="#{crisp(e.x1)}px,#{crisp(e.y1)}px" to="#{crisp(e.x2)}px,#{crisp(e.y2)}px" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px"><rvml:stroke class="rvml" opacity="#{e.strokeWidth}" miterlimit="8"></rvml:stroke></rvml:line>"""
+        else
+          """<rvml:line class="rvml" from="#{e.x1}px,#{e.y1}px" to="#{e.x2}px,#{e.y2}px" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px"><rvml:stroke class="rvml" opacity="#{e.strokeWidth}" miterlimit="8"></rvml:stroke></rvml:line>"""
       when 'oval'
         """<rvml:oval class="rvml" style="position:absolute;left:#{e.x-e.rx+0.5}px;top:#{e.y-e.ry+0.5}px;width:#{e.rx * 2}px;height:#{e.ry * 2}px;" strokecolor="#{e.strokeColor}" fillcolor="#{e.fillColor}"><rvml:stroke class="rvml" opacity="#{e.opacity}" miterlimit="8"></rvml:stroke><rvml:fill class="rvml" type="solid" opacity="#{e.opacity}"></rvml:fill></rvml:oval>"""
       when 'text'
@@ -23,3 +27,10 @@ class VMLRenderer
 
 window.suthchart ?= {}
 window.suthchart.VMLRenderer = new VMLRenderer()
+
+crispEdgeFunction = (width) ->
+  offset = if (width <= 1)
+    0
+  else
+    (width - 1) / 2
+  (x) -> Math.round(x) + offset

@@ -35,10 +35,8 @@ drawGraph = () ->
 
   sx = (x) ->
     r = (x - xAxis.min) * (graphWidth - margin.left - margin.right) / (xAxis.max - xAxis.min) + margin.left
-    Math.round(r)+0.5 # Align on path to generate sharp lines
   sy = (y) ->
     r = ((yAxis.max - y) - yAxis.min) * (graphHeight - margin.top - margin.bottom) / (yAxis.max - yAxis.min) + margin.top
-    Math.round(r)+0.5 # Align on path to generate sharp lines
 
   # Title
   drawing.add(drawing.text(graphWidth / 2, 20, title).withFont('Arial', 16).withStrokeColor('#555'))
@@ -56,7 +54,7 @@ drawGraph = () ->
     drawing.add(drawing.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.2))
 
   # X Axis
-  drawing.add(drawing.line(sx(0)-0.5, sy(0)-0.5, sx(xAxis.max)-0.5, sy(0)-0.5, 2))
+  drawing.add(drawing.line(sx(0), sy(0), sx(xAxis.max), sy(0)).withStrokeWidth(2))
   for x in [xAxis.min..xAxis.max] by xAxis.minorStep
     drawing.add(drawing.line(sx(x), sy(0)-2, sx(x), sy(0)+2))
   for x in [xAxis.min..xAxis.max] by xAxis.majorStep
@@ -64,7 +62,7 @@ drawGraph = () ->
     drawing.add(drawing.text(sx(x), sy(0) + 10, x.toString()).withFont('Arial', 10).withStrokeColor('#888'))
 
   # Y Axis
-  drawing.add(drawing.line(sx(0)-0.5, sy(yAxis.max)-0.5, sx(0)-0.5, sy(yAxis.min)-0.5).withStrokeWidth(2))
+  drawing.add(drawing.line(sx(0), sy(yAxis.max), sx(0), sy(yAxis.min)).withStrokeWidth(2))
   for y in [yAxis.min..yAxis.max] by yAxis.minorStep
     drawing.add(drawing.line(sx(0)-2, sy(y), sx(0)+2, sy(y)))
   for y in [yAxis.min..yAxis.max] by yAxis.majorStep

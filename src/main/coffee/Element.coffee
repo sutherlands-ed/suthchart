@@ -25,5 +25,9 @@ class Element
     @opacity = opacity
     this
 
+  withCrispEdges: (state = true) =>
+    @crispEdges = state
+    this
+
 window.suthchart ?= {}
 window.suthchart.Element = Element
