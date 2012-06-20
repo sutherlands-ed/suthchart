@@ -77,18 +77,19 @@ drawGraph = () ->
   # paper.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).attr(axisTitleTextAttr).transform("r270")
 
   # Curves
-  # _.each(curves, (curve,key) ->
-  #   range = _.range(0, curve.length-1, 4)
-  #   points = _.map(range, (i) ->
-  #     "#{sx(curve[i].yearsToMaturity)},#{sy(curve[i].yield)}"
-  #   )
-  #   first = _.first(points)
-  #   rest = _.rest(points)
-  #   lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
-  #   last = _.last(points)
-  #   path = "M" + first + "R" + lines + "," + last
-  #   paper.path(path).attr({'stroke-width': 0.2})
-  # )
+  _.each(curves, (curve,key) ->
+    range = _.range(0, curve.length-1, 4)
+    points = _.map(range, (i) ->
+      [sx(curve[i].yearsToMaturity), sy(curve[i].yield)]
+    )
+    drawing.add(drawing.curve(points).withStrokeWidth(0.2))
+    # first = _.first(points)
+    # rest = _.rest(points)
+    # lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
+    # last = _.last(points)
+    # path = "M" + first + "R" + lines + "," + last
+    # paper.path(path).attr({'stroke-width': 0.2})
+  )
 
   # Points
   for p,i in pointsx

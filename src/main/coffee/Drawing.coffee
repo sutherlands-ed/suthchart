@@ -13,6 +13,8 @@ class Drawing
 
   circle: (x,y,r) -> new suthchart.Circle(x,y,r)
 
+  curve: (points) -> new suthchart.Curve(points)
+
   line: (x1,y1, x2,y2) -> new suthchart.Line(x1,y1, x2,y2)
 
   oval: (x,y, rx,ry) -> new suthchart.Oval(x,y, rx,ry)

@@ -12,6 +12,17 @@ class SVGRenderer
     switch e.type
       when 'circle'
         """<circle cx="#{e.x}" cy="#{e.y}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
+      when 'curve'
+        crisp = crispEdgeFunction(e.strokeWidth)
+        points = _.map(e.points, (i) ->
+          [crisp(i[0]), crisp(i[1])]
+        )
+        first = _.first(points)
+        rest = _.rest(points)
+        lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
+        last = _.last(points)
+        path = "M" + first + "C" + lines + "," + last
+        """<path style="" fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}"></path>"""
       when 'line'
         if (e.crispEdges)
           crisp = crispEdgeFunction(e.strokeWidth)
