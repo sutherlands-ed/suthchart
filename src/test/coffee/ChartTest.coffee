@@ -82,18 +82,12 @@ drawGraph = () ->
     points = _.map(range, (i) ->
       [sx(curve[i].yearsToMaturity), sy(curve[i].yield)]
     )
-    drawing.add(drawing.curve(points).withStrokeWidth(0.2))
-    # first = _.first(points)
-    # rest = _.rest(points)
-    # lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
-    # last = _.last(points)
-    # path = "M" + first + "R" + lines + "," + last
-    # paper.path(path).attr({'stroke-width': 0.2})
+    drawing.add(drawing.curve(points).withStroke(0.5, 'red'))
   )
 
   # Points
   for p,i in pointsx
-    c = drawing.add(drawing.circle(sx(pointsx[i]), sy(pointsy[i]), dotSize).withStroke(1, '#000').withFill('#888').withOpacity(0.5)) # .attr({fill: "#888", opacity: 0.5})
+    c = drawing.add(drawing.circle(sx(pointsx[i]), sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5)) # .attr({fill: "#888", opacity: 0.5})
     # c.id = i
     # popup = null
     # label = null

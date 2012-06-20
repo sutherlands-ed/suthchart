@@ -28,7 +28,7 @@ class VMLRenderer
         lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
         last = _.last(points)
         path = "m" + first + "c" + lines + "," + last + " e"
-        """<rvml:shape class="rvml" style="position:absolute;width:1px;height:1px;top:0px;left:0px" coordsize="1,1" filled="f" stroked="t" strokecolor="black" strokeweight="1pt" path="#{path}"><rvml:stroke class="rvml" opacity="9830f" miterlimit="8"></rvml:stroke><rvml:fill class="rvml"></rvml:fill></rvml:shape>"""
+        """<rvml:shape class="rvml" style="position:absolute;width:1px;height:1px;top:0px;left:0px" coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><rvml:stroke class="rvml" opacity="#{e.strokeWidth}" miterlimit="8"></rvml:stroke><rvml:fill class="rvml"></rvml:fill></rvml:shape>"""
       when 'line'
         if (e.crispEdges)
           crisp = crispEdgeFunction(e.strokeWidth)
