@@ -1,32 +1,36 @@
 class Element
 
-  withStroke: (width, color) =>
+  withStroke: (width, color) ->
     @strokeWidth = width
     @strokeColor = color
     this
 
-  withFill: (color) =>
+  withFill: (color) ->
     @fillColor = color
     this
 
-  withStrokeWidth: (width) =>
+  withStrokeWidth: (width) ->
     @strokeWidth = width
     this
 
-  withStrokeColor: (color) =>
+  withStrokeColor: (color) ->
     @strokeColor = color
     this
 
-  withFillColor: (color) =>
+  withFillColor: (color) ->
     @fillColor = color
     this
 
-  withOpacity: (opacity) =>
+  withOpacity: (opacity) ->
     @opacity = opacity
     this
 
-  withCrispEdges: (state = true) =>
+  withCrispEdges: (state = true) ->
     @crispEdges = state
+    this
+
+  withRotation: (angle) ->
+    @rotationAngle = angle
     this
 
 window.suthchart ?= {}

@@ -5,6 +5,7 @@ class Text extends suthchart.Element
   fontSize: 16
   textAnchor: 'middle'
   strokeColor: '#000'
+  rotationAngle: 0
 
   constructor: (x, y, text) ->
     @x = x
