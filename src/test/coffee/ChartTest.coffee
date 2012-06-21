@@ -38,8 +38,15 @@ drawGraph = () ->
   sy = (y) ->
     r = ((yAxis.max - y) - yAxis.min) * (graphHeight - margin.top - margin.bottom) / (yAxis.max - yAxis.min) + margin.top
 
+  chart.margins(50,50,50,50)
+  chart.xAxis("Years to maturity", 0, 50, 10, 1)
+  chart.yAxis("Yield", 0, 30, 10, 1)
+
   # Title
-  chart.add(chart.text(graphWidth / 2, 20, title).withFont('Arial', 16).withStrokeColor('#555'))
+  # chart.add(chart.text(graphWidth / 2, 20, title).withFont('Arial', 16).withStrokeColor('#555'))
+  chart.add(chart.title("Curves and Bonds"))
+  # chart.add(chart.grid())
+  # chart.add(chart.axis())
 
   # X Grid
   for x in [xAxis.min..xAxis.max] by xAxis.minorStep
