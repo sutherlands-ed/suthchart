@@ -41,7 +41,7 @@ class SVGRenderer
         transform = if (e.rotationAngle == 0)
           ""
         else
-          """transform="rotate(270,#{e.x},#{e.y})" """
+          """transform="rotate(#{e.rotationAngle},#{e.x},#{e.y})" """
         """<text x="#{e.x}" y="#{e.y}" style="#{e.style}" text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.strokeColor}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}" #{transform}><tspan dy="#{e.fontSize * 0.35}">#{e.text}</tspan></text>"""
       else
         console.log("Unhandled element type: #{e.type}")

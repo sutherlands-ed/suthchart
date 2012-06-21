@@ -74,7 +74,7 @@ drawGraph = () ->
   drawing.add(drawing.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title).withFont('Arial', 12).withStrokeColor('#888'))
 
   # Y Axis Title
-  drawing.add(drawing.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).withFont('Arial', 12).withStrokeColor('#888').withRotation(270))
+  drawing.add(drawing.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
 
   # Curves
   _.each(curves, (curve,key) ->
