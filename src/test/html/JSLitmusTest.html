@@ -5,7 +5,7 @@
 	<script type="text/javascript" src="../../../lib/JSLitmus/JSLitmus.js"></script>
 
 	<!-- include source files here... -->
-	<script src="../../../target/suthchart.js"></script>
+	<script src="../../../target/suthdraw.js"></script>
 </head>
 <body>
 	<div id="graphVML" style="float:right;"></div><div id="graphSVG"></div>
@@ -18,7 +18,7 @@
 		};
 
 		JSLitmus.test('Drawing Test', function() {
-			drawing = suthchart.Drawing();
+			drawing = suthdraw.Drawing();
 			for (var i = 50; i > 0; i--) {
 				line = drawing.line(random,random, random,random);
 				drawing.add(line);

@@ -33,5 +33,5 @@ class Element
     @rotationAngle = angle
     this
 
-window.suthchart ?= {}
-window.suthchart.Element = Element
+window.suthdraw ?= {}
+window.suthdraw.Element = Element

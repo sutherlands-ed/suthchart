@@ -47,8 +47,8 @@ class SVGRenderer
         console.log("Unhandled element type: #{e.type}")
 
 
-window.suthchart ?= {}
-window.suthchart.SVGRenderer = new SVGRenderer()
+window.suthdraw ?= {}
+window.suthdraw.SVGRenderer = new SVGRenderer()
 
 crispEdgeFunction = (width) ->
   offset = if (width <= 1)

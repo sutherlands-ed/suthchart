@@ -12,7 +12,7 @@ curves = []
 
 drawGraph = () ->
 
-  drawing = suthchart.Drawing(graphWidth, graphHeight)
+  drawing = suthdraw.Drawing(graphWidth, graphHeight)
 
   window.mydata = data # to aid debugging
   window.mycurves = curves # to aid debugging

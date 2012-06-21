@@ -1,4 +1,4 @@
-class Circle extends suthchart.Element
+class Circle extends suthdraw.Element
 
   type: 'circle'
   strokeWidth: 1
@@ -11,5 +11,5 @@ class Circle extends suthchart.Element
     @y = y
     @r = r
 
-window.suthchart ?= {}
-window.suthchart.Circle = Circle
+window.suthdraw ?= {}
+window.suthdraw.Circle = Circle

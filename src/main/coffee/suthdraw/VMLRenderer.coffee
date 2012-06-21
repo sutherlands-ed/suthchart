@@ -46,8 +46,8 @@ class VMLRenderer
       else
         console.log("Unhandled element type: #{e.type}")
 
-window.suthchart ?= {}
-window.suthchart.VMLRenderer = new VMLRenderer()
+window.suthdraw ?= {}
+window.suthdraw.VMLRenderer = new VMLRenderer()
 
 crispEdgeFunction = (width) ->
   offset = if (width <= 1)

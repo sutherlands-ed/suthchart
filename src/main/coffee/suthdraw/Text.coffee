@@ -1,4 +1,4 @@
-class Text extends suthchart.Element
+class Text extends suthdraw.Element
 
   type: 'text'
   fontFamily: 'Arial'
@@ -29,5 +29,5 @@ class Text extends suthchart.Element
     @textAnchor = position
     this
 
-window.suthchart ?= {}
-window.suthchart.Text = Text
+window.suthdraw ?= {}
+window.suthdraw.Text = Text

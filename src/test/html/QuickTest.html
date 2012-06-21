@@ -4,7 +4,7 @@
 	<title>suthchart QuickTest</title>
 	<script src="../../../lib/CoffeeScript/coffee-script.js"></script>
 	
-	<script src="../../../target/suthchart.js"></script>
+	<script src="../../../target/suthdraw.js"></script>
 	<style> .rvml { BEHAVIOR: url(#default#VML) } </style>
 </head>
 <body>
@@ -13,7 +13,7 @@
 		randomCoord = () -> Math.random() * 500
 		randomRadius = () -> Math.random() * 20
 
-		drawing = suthchart.Drawing()
+		drawing = suthdraw.Drawing()
 		for i in [0..50]
 			line = drawing.line(randomCoord(),randomCoord(), randomCoord(),randomCoord())
 			drawing.add(line)

@@ -1,4 +1,4 @@
-class Oval extends suthchart.Element
+class Oval extends suthdraw.Element
 
   type: 'oval'
   strokeWidth: 1
@@ -12,5 +12,5 @@ class Oval extends suthchart.Element
     @rx = rx
     @ry = ry
 
-window.suthchart ?= {}
-window.suthchart.Oval = Oval
+window.suthdraw ?= {}
+window.suthdraw.Oval = Oval

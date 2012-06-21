@@ -1,4 +1,4 @@
-class Curve extends suthchart.Element
+class Curve extends suthdraw.Element
 
   type: 'curve'
   strokeWidth: 1
@@ -10,5 +10,5 @@ class Curve extends suthchart.Element
   constructor: (points) ->
     @points = points
 
-window.suthchart ?= {}
-window.suthchart.Curve = Curve
+window.suthdraw ?= {}
+window.suthdraw.Curve = Curve

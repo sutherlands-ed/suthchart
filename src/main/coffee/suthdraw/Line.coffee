@@ -1,4 +1,4 @@
-class Line extends suthchart.Element
+class Line extends suthdraw.Element
 
   type: 'line'
   strokeWidth: 1
@@ -12,5 +12,5 @@ class Line extends suthchart.Element
     @x2 = x2
     @y2 = y2
 
-window.suthchart ?= {}
-window.suthchart.Line = Line
+window.suthdraw ?= {}
+window.suthdraw.Line = Line
