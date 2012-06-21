@@ -12,7 +12,7 @@ curves = []
 
 drawGraph = () ->
 
-  drawing = suthdraw.Drawing(graphWidth, graphHeight)
+  chart = new suthchart.Chart(graphWidth, graphHeight)
 
   window.mydata = data # to aid debugging
   window.mycurves = curves # to aid debugging
@@ -39,42 +39,42 @@ drawGraph = () ->
     r = ((yAxis.max - y) - yAxis.min) * (graphHeight - margin.top - margin.bottom) / (yAxis.max - yAxis.min) + margin.top
 
   # Title
-  drawing.add(drawing.text(graphWidth / 2, 20, title).withFont('Arial', 16).withStrokeColor('#555'))
+  chart.add(chart.text(graphWidth / 2, 20, title).withFont('Arial', 16).withStrokeColor('#555'))
 
   # X Grid
   for x in [xAxis.min..xAxis.max] by xAxis.minorStep
-    drawing.add(drawing.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.1))
+    chart.add(chart.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.1))
   for x in [xAxis.min..xAxis.max] by xAxis.majorStep
-    drawing.add(drawing.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.2))
+    chart.add(chart.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.2))
 
   # Y Grid
   for y in [yAxis.min..yAxis.max] by yAxis.minorStep
-    drawing.add(drawing.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.1))
+    chart.add(chart.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.1))
   for y in [yAxis.min..yAxis.max] by yAxis.majorStep
-    drawing.add(drawing.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.2))
+    chart.add(chart.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.2))
 
   # X Axis
-  drawing.add(drawing.line(sx(0), sy(0), sx(xAxis.max), sy(0)).withStrokeWidth(2))
+  chart.add(chart.line(sx(0), sy(0), sx(xAxis.max), sy(0)).withStrokeWidth(2))
   for x in [xAxis.min..xAxis.max] by xAxis.minorStep
-    drawing.add(drawing.line(sx(x), sy(0)-2, sx(x), sy(0)+2))
+    chart.add(chart.line(sx(x), sy(0)-2, sx(x), sy(0)+2))
   for x in [xAxis.min..xAxis.max] by xAxis.majorStep
-    drawing.add(drawing.line(sx(x), sy(0)-4, sx(x), sy(0)+4))
-    drawing.add(drawing.text(sx(x), sy(0) + 10, x.toString()).withFont('Arial', 10).withStrokeColor('#888'))
+    chart.add(chart.line(sx(x), sy(0)-4, sx(x), sy(0)+4))
+    chart.add(chart.text(sx(x), sy(0) + 10, x.toString()).withFont('Arial', 10).withStrokeColor('#888'))
 
   # Y Axis
-  drawing.add(drawing.line(sx(0), sy(yAxis.max), sx(0), sy(yAxis.min)).withStrokeWidth(2))
+  chart.add(chart.line(sx(0), sy(yAxis.max), sx(0), sy(yAxis.min)).withStrokeWidth(2))
   for y in [yAxis.min..yAxis.max] by yAxis.minorStep
-    drawing.add(drawing.line(sx(0)-2, sy(y), sx(0)+2, sy(y)))
+    chart.add(chart.line(sx(0)-2, sy(y), sx(0)+2, sy(y)))
   for y in [yAxis.min..yAxis.max] by yAxis.majorStep
-    drawing.add(drawing.line(sx(0)-4, sy(y), sx(0)+4, sy(y)))
-    drawing.add(drawing.text(sx(0)-15, sy(y), y.toString()).withFont('Arial', 10).withStrokeColor('#888'))
+    chart.add(chart.line(sx(0)-4, sy(y), sx(0)+4, sy(y)))
+    chart.add(chart.text(sx(0)-15, sy(y), y.toString()).withFont('Arial', 10).withStrokeColor('#888'))
 
 
   # X Axis Title
-  drawing.add(drawing.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title).withFont('Arial', 12).withStrokeColor('#888'))
+  chart.add(chart.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title).withFont('Arial', 12).withStrokeColor('#888'))
 
   # Y Axis Title
-  drawing.add(drawing.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
+  chart.add(chart.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
 
   # Curves
   _.each(curves, (curve,key) ->
@@ -82,12 +82,12 @@ drawGraph = () ->
     points = _.map(range, (i) ->
       [sx(curve[i].yearsToMaturity), sy(curve[i].yield)]
     )
-    drawing.add(drawing.curve(points).withStroke(0.5, 'red'))
+    chart.add(chart.curve(points).withStroke(0.5, 'red'))
   )
 
   # Points
   for p,i in pointsx
-    c = drawing.add(drawing.circle(sx(pointsx[i]), sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5)) # .attr({fill: "#888", opacity: 0.5})
+    c = chart.add(chart.circle(sx(pointsx[i]), sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5)) # .attr({fill: "#888", opacity: 0.5})
     # c.id = i
     # popup = null
     # label = null
@@ -103,7 +103,7 @@ drawGraph = () ->
     #   label.hide()
     # )
 
-  document.getElementById('graph').innerHTML = drawing.render()
+  document.getElementById('graph').innerHTML = chart.render()
 
 
 downloadCount = 2

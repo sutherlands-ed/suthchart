@@ -4,7 +4,7 @@ class Drawing
 
   elements: []
 
-  constructor: (width, height) ->
+  constructor: (width = 500, height = 500) ->
     @width = width
     @height = height
 
@@ -34,7 +34,7 @@ class Drawing
       suthdraw.VMLRenderer.render(this)
 
 window.suthdraw ?= {}
-window.suthdraw.Drawing = (width = 500, height = 500) -> new Drawing(width, height)
+window.suthdraw.Drawing = Drawing
 
 # PRIVATE
 
