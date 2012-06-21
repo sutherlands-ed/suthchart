@@ -59,4 +59,10 @@ crispEdgeFunction = (width) ->
 radians = (d) -> d * (Math.PI / 180)
 
 rotationMatrix = (d) ->
-  "#{Math.cos(radians(d))},#{-Math.sin(radians(d))},#{Math.sin(radians(d))},#{Math.cos(radians(d))},0,0"
+  r = radians(d)
+  # VML matrix manipulation does not handle scientific notation well.  The use of `toFixed` and `Number` force the
+  # results to be presented in non-scientific notation but prevent the unnecessary inclusion of decimal paces that
+  # just contain zeros.
+  cos = Number(Math.cos(r).toFixed(9))
+  sin = Number(Math.sin(r).toFixed(9))
+  "#{cos},#{-sin},#{sin},#{cos},0,0"
