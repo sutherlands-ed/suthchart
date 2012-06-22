@@ -60,7 +60,7 @@ class Chart extends suthdraw.Drawing
       g.add(@line(@sx(0)-2, @sy(y), @sx(0)+2, @sy(y)))
     for y in [@yAxisMin..@yAxisMax] by @yAxisMajorStep
       g.add(@line(@sx(0)-4, @sy(y), @sx(0)+4, @sy(y)))
-      g.add(@text(@sx(0)-15, @sy(y), y.toString()).withFont('Arial', 10).withStrokeColor('#888'))
+      g.add(@text(@sx(0)-5, @sy(y), y.toString()).withFont('Arial', 10).withStrokeColor('#888').withAnchoring('end'))
     g.add(@text(10, @sy((@yAxisMin + @yAxisMax)/2), @yAxisTitle).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
     g
 
