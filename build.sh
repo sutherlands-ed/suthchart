@@ -5,6 +5,7 @@
 suthdrawLibs="src/main/coffee/suthdraw/Element.coffee \
 	src/main/coffee/suthdraw/Circle.coffee \
 	src/main/coffee/suthdraw/Curve.coffee \
+	src/main/coffee/suthdraw/Group.coffee \
 	src/main/coffee/suthdraw/Line.coffee \
 	src/main/coffee/suthdraw/Oval.coffee \
 	src/main/coffee/suthdraw/Text.coffee \

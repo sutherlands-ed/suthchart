@@ -29,6 +29,11 @@ class SVGRenderer
         last = _.last(points)
         path = "M" + first + "C" + lines + "," + last
         """<path style="" fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}"></path>"""
+      when 'group'
+        html = []
+        for e in e.elements
+          html.push(@renderElement(e))
+        html.join('')
       when 'line'
         if (e.crispEdges)
           crisp = SVGRenderer.crispEdgeFunction(e.strokeWidth)

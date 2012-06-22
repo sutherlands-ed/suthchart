@@ -15,6 +15,8 @@ class Drawing
 
   curve: (points) -> new suthdraw.Curve(points)
 
+  group: () -> new suthdraw.Group()
+
   line: (x1,y1, x2,y2) -> new suthdraw.Line(x1,y1, x2,y2)
 
   oval: (x,y, rx,ry) -> new suthdraw.Oval(x,y, rx,ry)
