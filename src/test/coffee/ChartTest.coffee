@@ -42,46 +42,10 @@ drawGraph = () ->
   chart.xAxis("Years to maturity", 0, 50, 10, 1)
   chart.yAxis("Yield", 0, 30, 10, 1)
 
-  # Title
-  # chart.add(chart.text(graphWidth / 2, 20, title).withFont('Arial', 16).withStrokeColor('#555'))
   chart.add(chart.title("Curves and Bonds"))
-  # chart.add(chart.grid())
-  # chart.add(chart.axis())
+  chart.add(chart.grid())
+  chart.add(chart.axis())
 
-  # X Grid
-  for x in [xAxis.min..xAxis.max] by xAxis.minorStep
-    chart.add(chart.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.1))
-  for x in [xAxis.min..xAxis.max] by xAxis.majorStep
-    chart.add(chart.line(sx(x), sy(yAxis.min), sx(x), sy(yAxis.max)).withStrokeWidth(0.2))
-
-  # Y Grid
-  for y in [yAxis.min..yAxis.max] by yAxis.minorStep
-    chart.add(chart.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.1))
-  for y in [yAxis.min..yAxis.max] by yAxis.majorStep
-    chart.add(chart.line(sx(0), sy(y), sx(xAxis.max), sy(y)).withStrokeWidth(0.2))
-
-  # X Axis
-  chart.add(chart.line(sx(0), sy(0), sx(xAxis.max), sy(0)).withStrokeWidth(2))
-  for x in [xAxis.min..xAxis.max] by xAxis.minorStep
-    chart.add(chart.line(sx(x), sy(0)-2, sx(x), sy(0)+2))
-  for x in [xAxis.min..xAxis.max] by xAxis.majorStep
-    chart.add(chart.line(sx(x), sy(0)-4, sx(x), sy(0)+4))
-    chart.add(chart.text(sx(x), sy(0) + 10, x.toString()).withFont('Arial', 10).withStrokeColor('#888'))
-
-  # Y Axis
-  chart.add(chart.line(sx(0), sy(yAxis.max), sx(0), sy(yAxis.min)).withStrokeWidth(2))
-  for y in [yAxis.min..yAxis.max] by yAxis.minorStep
-    chart.add(chart.line(sx(0)-2, sy(y), sx(0)+2, sy(y)))
-  for y in [yAxis.min..yAxis.max] by yAxis.majorStep
-    chart.add(chart.line(sx(0)-4, sy(y), sx(0)+4, sy(y)))
-    chart.add(chart.text(sx(0)-15, sy(y), y.toString()).withFont('Arial', 10).withStrokeColor('#888'))
-
-
-  # X Axis Title
-  chart.add(chart.text(sx((_.min(xAxis) + _.max(xAxis))/2), graphHeight - 10, xAxis.title).withFont('Arial', 12).withStrokeColor('#888'))
-
-  # Y Axis Title
-  chart.add(chart.text(10, sy((_.min(yAxis) + _.max(yAxis))/2), yAxis.title).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
 
   # Curves
   _.each(curves, (curve,key) ->
