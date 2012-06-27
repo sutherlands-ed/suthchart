@@ -21,23 +21,6 @@ drawGraph = () ->
   pointsy = _.map(data, (d) -> parseFloat(d[9]))
   pointsdata = _.map(data, (d) -> d[0])
 
-  minx = _.min(pointsx)
-  miny = _.min(pointsy)
-  maxx = _.max(pointsx)
-  maxy = _.max(pointsy)
-
-  margin = {
-    left: 50
-    right: 50
-    top: 50
-    bottom: 50
-  }
-
-  sx = (x) ->
-    r = (x - xAxis.min) * (graphWidth - margin.left - margin.right) / (xAxis.max - xAxis.min) + margin.left
-  sy = (y) ->
-    r = ((yAxis.max - y) - yAxis.min) * (graphHeight - margin.top - margin.bottom) / (yAxis.max - yAxis.min) + margin.top
-
   chart.margins(50,50,50,50)
   chart.xAxis("Years to maturity", 0, 50, 10, 1)
   chart.yAxis("Yield", 0, 30, 10, 1)
@@ -46,19 +29,18 @@ drawGraph = () ->
   chart.add(chart.grid())
   chart.add(chart.axis())
 
-
   # Curves
   _.each(curves, (curve,key) ->
     range = _.range(0, curve.length-1, 4)
     points = _.map(range, (i) ->
-      [sx(curve[i].yearsToMaturity), sy(curve[i].yield)]
+      [chart.sx(curve[i].yearsToMaturity), chart.sy(curve[i].yield)]
     )
     chart.add(chart.curve(points).withStroke(0.5, 'red'))
   )
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
   # Points
   for p,i in pointsx
-    c = chart.add(chart.circle(sx(pointsx[i]), sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5)) # .attr({fill: "#888", opacity: 0.5})
+    c = chart.add(chart.circle(chart.sx(pointsx[i]), chart.sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5).withID(i)) # .attr({fill: "#888", opacity: 0.5})
     # c.id = i
     # popup = null
     # label = null
@@ -75,6 +57,18 @@ drawGraph = () ->
     # )
 
   document.getElementById('graph').innerHTML = chart.render()
+
+  $('#graph').on('click', '.sd-circle', (event) ->
+    e = chart.activeElement(this)
+    selected = $('.sd-circle.selected')[0]
+    if selected?
+      olde = chart.activeElement(selected)
+      olde.setFillColor('black').setStrokeColor('green').setOpacity(0.5).setRadius(3).removeClass('selected')
+    e.setFillColor('red').setStrokeColor('red').setOpacity(1).setRadius(10).addClass('selected')
+    window.suthchart.x = this
+    i = e.id
+    # alert("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
+  )
 
 
 downloadCount = 2

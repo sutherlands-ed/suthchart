@@ -23,6 +23,16 @@ class Drawing
 
   text: (x, y, text) -> new suthdraw.Text(x, y, text)
 
+  # Return an object representing the element of the VML or SVG rendered drawing for the element passed to this
+  # function.  This provides a standardised interface for interacting with such elements regardless of whether they
+  # are VML or SVG.
+  activeElement: (element) ->
+    c = element.attributes.class.nodeValue
+    if c.match(///rvml///)?
+      new suthdraw.VMLElement(element)
+    else
+      new suthdraw.SVGElement(element)
+
   svg: () ->
     suthdraw.SVGRenderer.render(this)
 

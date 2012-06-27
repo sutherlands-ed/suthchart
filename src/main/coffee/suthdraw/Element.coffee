@@ -1,5 +1,7 @@
 class Element
 
+  id: ""
+
   withStroke: (width, color) ->
     @strokeWidth = width
     @strokeColor = color
@@ -32,6 +34,14 @@ class Element
   withRotation: (angle) ->
     @rotationAngle = angle
     this
+
+  withID: (id) ->
+    @id = id
+    this
+
+  idIfSet: () ->
+    if (@id == "") then "" else "data-id=\"#{@id}\""
+
 
 window.suthdraw ?= {}
 window.suthdraw.Element = Element

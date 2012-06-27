@@ -10,6 +10,9 @@ suthdrawLibs="src/main/coffee/suthdraw/Element.coffee \
 	src/main/coffee/suthdraw/Oval.coffee \
 	src/main/coffee/suthdraw/Text.coffee \
 	src/main/coffee/suthdraw/Drawing.coffee \
+	src/main/coffee/suthdraw/ActiveElement.coffee \
+	src/main/coffee/suthdraw/SVGElement.coffee \
+	src/main/coffee/suthdraw/VMLElement.coffee \
 	src/main/coffee/suthdraw/SVGRenderer.coffee \
 	src/main/coffee/suthdraw/VMLRenderer.coffee"
 
