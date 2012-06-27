@@ -2,8 +2,8 @@ class Text extends suthdraw.Element
 
   type: 'text'
   fontFamily: 'Arial'
-  fontSize: 16
-  textAnchor: 'middle'
+  fontSize: 16 # size in pixels
+  textAnchor: 'middle' # 'start', 'middle' or 'end'
   strokeColor: '#000'
   rotationAngle: 0
 
@@ -28,6 +28,14 @@ class Text extends suthdraw.Element
   withAnchoring: (position) ->
     @textAnchor = position
     this
+
+  # textAnchor expressed as a textAlign.
+  textAlign: () ->
+    switch @textAnchor
+      when "start" then "left"
+      when "middle" then "center"
+      when "end" then "right"
+      else ""
 
 window.suthdraw ?= {}
 window.suthdraw.Text = Text
