@@ -5,6 +5,7 @@ class Circle extends suthdraw.Element
   strokeColor: '#FFF'
   fillColor: '#888'
   opacity: 1
+  crispEdges: true
 
   constructor: (x, y, r) ->
     @x = x

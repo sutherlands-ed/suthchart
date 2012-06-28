@@ -1,7 +1,7 @@
 class Chart extends suthdraw.Drawing
 
   title: (title) ->
-    @text(@width / 2, @margin.top / 2, title).withFont('Arial', 16).withStrokeColor('#555')
+    @text(@width / 2, @margin.top / 2, title).withFont('Arial', 16).withStrokeColor('#555').withFontWeight('bold')
 
   margins: (top, right, bottom, left) ->
     @margin = {

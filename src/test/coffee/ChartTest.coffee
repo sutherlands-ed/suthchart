@@ -56,6 +56,16 @@ drawGraph = () ->
     #   label.hide()
     # )
 
+  # Create a single manual popup for testing...
+  popupX = 640
+  popupY = 515
+  popupWidth = 150
+  popupHeight = 35
+  chart.add(chart.rectangle(popupX + 1,popupY + 1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
+  chart.add(chart.rectangle(popupX,popupY,popupWidth,popupHeight,5,5).withFillColor('black').withOpacity(0.75))
+  chart.add(chart.text(popupX + 5,popupY + 10, "XX012345678").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withOpacity(0.75))
+  chart.add(chart.text(popupX + 5,popupY + 25, "Royal Bank of Scotland").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withFontWeight('bold').withOpacity(0.75))
+
   document.getElementById('graph').innerHTML = chart.render()
 
   $('#graph').on('click', '.sd-circle', (event) ->

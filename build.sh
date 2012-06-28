@@ -13,6 +13,7 @@ suthdrawLibs=" \
        target/lib/suthdraw/Group.js \
        target/lib/suthdraw/Line.js \
        target/lib/suthdraw/Oval.js \
+       target/lib/suthdraw/Rectangle.js \
        target/lib/suthdraw/Text.js \
        target/lib/suthdraw/Drawing.js \
        target/lib/suthdraw/ActiveElement.js \

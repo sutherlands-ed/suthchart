@@ -6,6 +6,7 @@ class Text extends suthdraw.Element
   textAnchor: 'middle' # 'start', 'middle' or 'end'
   strokeColor: '#000'
   rotationAngle: 0
+  fontWeight: 'normal'
 
   constructor: (x, y, text) ->
     @x = x
@@ -27,6 +28,10 @@ class Text extends suthdraw.Element
 
   withAnchoring: (position) ->
     @textAnchor = position
+    this
+
+  withFontWeight: (weight) ->
+    @fontWeight = weight
     this
 
   # textAnchor expressed as a textAlign.
