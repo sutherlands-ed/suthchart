@@ -1,31 +1,38 @@
 #! /bin/bash
 
-# Build all the CoffeeScript source files into a single JavaScript output file...
+# Compile all the CoffeeScript source files...
 
-suthdrawLibs="src/main/coffee/suthdraw/Element.coffee \
-	src/main/coffee/suthdraw/Circle.coffee \
-	src/main/coffee/suthdraw/Curve.coffee \
-	src/main/coffee/suthdraw/Group.coffee \
-	src/main/coffee/suthdraw/Line.coffee \
-	src/main/coffee/suthdraw/Oval.coffee \
-	src/main/coffee/suthdraw/Text.coffee \
-	src/main/coffee/suthdraw/Drawing.coffee \
-	src/main/coffee/suthdraw/ActiveElement.coffee \
-	src/main/coffee/suthdraw/SVGElement.coffee \
-	src/main/coffee/suthdraw/VMLElement.coffee \
-	src/main/coffee/suthdraw/SVGRenderer.coffee \
-	src/main/coffee/suthdraw/VMLRenderer.coffee"
+coffee --compile --output target/lib src/main/coffee
 
-suthchartLibs="src/main/coffee/suthchart/Chart.coffee"
+# Merge the js files together...
 
-coffee --join target/suthdraw.js --compile $suthdrawLibs
+suthdrawLibs=" \
+	   target/lib/suthdraw/Element.js \
+       target/lib/suthdraw/Circle.js \
+       target/lib/suthdraw/Curve.js \
+       target/lib/suthdraw/Group.js \
+       target/lib/suthdraw/Line.js \
+       target/lib/suthdraw/Oval.js \
+       target/lib/suthdraw/Text.js \
+       target/lib/suthdraw/Drawing.js \
+       target/lib/suthdraw/ActiveElement.js \
+       target/lib/suthdraw/SVGElement.js \
+       target/lib/suthdraw/VMLElement.js \
+       target/lib/suthdraw/SVGRenderer.js \
+       target/lib/suthdraw/VMLRenderer.js"
 
-coffee --join target/suthchart.js --compile $suthdrawLibs $suthchartLibs
+suthchartLibs="target/lib/suthchart/Chart.js"
 
-# Use the Google closure compiler to minify the resulting code.
+cat $suthdrawLibs > target/suthdraw.js
+cat $suthdrawLibs $suthchartLibs > target/suthchart.js
+
+# Use the Google closure compiler to minify the resulting code, but background this to return quickly once the main
+# compile and concat is complete.
+
 # To install the Google closure compiler on a Mac with Homebrew just enter: `brew install closure-compiler`.
 
-closure-compiler --js_output_file target/suthdraw.min.js target/suthdraw.js
-
-closure-compiler --js_output_file target/suthchart.min.js target/suthchart.js
+(
+	closure-compiler --js_output_file target/suthdraw.min.js target/suthdraw.js
+	closure-compiler --js_output_file target/suthchart.min.js target/suthchart.js
+) &
 

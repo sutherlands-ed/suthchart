@@ -1,16 +1,34 @@
 class ActiveElement
 
   addClass: (className) ->
-    c = @element.getAttribute('class').split(' ')
+    c = @getClasses()
     c.push(className)
-    @element.setAttribute('class', c.join(' '))
+    @setClasses(c)
     this
 
   removeClass: (className) ->
-    classes = @element.getAttribute('class').split(' ')
-    newClasses = classes.filter( (x) -> x != className )
-    @element.setAttribute('class', newClasses.join(' '))
+    classes = @getClasses()
+    newClasses = (x for x in classes when x != className)
+    @setClasses(newClasses)
     this
+
+  getClasses: () ->
+    c = @element.className
+    if (typeof c == "string")
+      c.split(' ')
+    else
+      @element.getAttribute('class').split(' ')
+
+  setClasses: (classes) ->
+    c = @element.className
+    classesString = if classes?
+      classes.join(' ')
+    else
+      null
+    if (typeof c == "string")
+      @element.className = classesString
+    else
+      @element.setAttribute('class', classesString)
 
   constructor: (element) ->
     @element = element

@@ -1,11 +1,7 @@
-class VMLElement extends ActiveElement
+class VMLElement extends suthdraw.ActiveElement
 
   setFillColor: (color) ->
     @element.fillcolor = color
-    this
-
-  setStrokeColor: (color) ->
-    @element.strokecolor = color
     this
 
   setOpacity: (opacity) ->
@@ -14,10 +10,10 @@ class VMLElement extends ActiveElement
     this
 
   setRadius: (radius) ->
-    left = Number(@element.style.left.match(///\d+///)?[0])
-    top = Number(@element.style.top.match(///\d+///)?[0])
-    width = Number(@element.style.width.match(///\d+///)?[0])
-    height = Number(@element.style.height.match(///\d+///)?[0])
+    left = VMLElement.numberInString(@element.style.left)
+    top = VMLElement.numberInString(@element.style.top)
+    width = VMLElement.numberInString(@element.style.width)
+    height = VMLElement.numberInString(@element.style.height)
     cx = left + (width / 2)
     cy = top + (height / 2)
     left = cx - radius
@@ -29,6 +25,19 @@ class VMLElement extends ActiveElement
     @element.style.width = width + "px"
     @element.style.height = height + "px"
     this
+
+  setStrokeColor: (color) ->
+    @element.strokecolor = color
+    this
+
+  setStrokeWidth: (width) ->
+    @element.strokewidth = width
+    this
+
+  # OBJECT FUNCTIONS
+
+  @numberInString: (string) ->
+    Number(string.match(///\d+///)?[0])
 
 window.suthdraw ?= {}
 window.suthdraw.VMLElement = VMLElement

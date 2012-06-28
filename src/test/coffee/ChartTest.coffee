@@ -63,8 +63,8 @@ drawGraph = () ->
     selected = $('.sd-circle.selected')[0]
     if selected?
       olde = chart.activeElement(selected)
-      olde.setFillColor('black').setStrokeColor('green').setOpacity(0.5).setRadius(3).removeClass('selected')
-    e.setFillColor('red').setStrokeColor('red').setOpacity(1).setRadius(10).addClass('selected')
+      olde.setFillColor('#888').setStrokeColor('green').setStrokeWidth(1).setOpacity(0.5).setRadius(3).removeClass('selected')
+    e.setStrokeColor('red').setStrokeWidth(2).setOpacity(0.75).setRadius(6).addClass('selected')
     window.suthchart.x = this
     i = e.id
     # alert("clicked on bond #{data[i][0]} issued by #{data[i][2]}")

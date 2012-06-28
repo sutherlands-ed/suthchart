@@ -42,6 +42,5 @@ class Element
   idIfSet: () ->
     if (@id == "") then "" else "data-id=\"#{@id}\""
 
-
 window.suthdraw ?= {}
 window.suthdraw.Element = Element

@@ -1,11 +1,7 @@
-class SVGElement extends ActiveElement
+class SVGElement extends suthdraw.ActiveElement
 
   setFillColor: (color) ->
     @element.style.fill = color
-    this
-
-  setStrokeColor: (color) ->
-    @element.style.stroke = color
     this
 
   setOpacity: (opacity) ->
@@ -14,6 +10,14 @@ class SVGElement extends ActiveElement
 
   setRadius: (radius) ->
     @element.setAttribute('r', radius)
+    this
+
+  setStrokeColor: (color) ->
+    @element.style.stroke = color
+    this
+
+  setStrokeWidth: (width) ->
+    @element.style.strokeWidth = width
     this
 
 
