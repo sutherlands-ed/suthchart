@@ -1,6 +1,7 @@
 class Curve extends suthdraw.Element
 
   constructor: (@points) ->
+    super()
     @type = 'curve'
     @strokeWidth = 1
     @strokeColor = '#000'
