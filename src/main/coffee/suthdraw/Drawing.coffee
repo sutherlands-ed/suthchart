@@ -10,7 +10,7 @@ class Drawing
 
   curve: (points) -> new suthdraw.Curve(points)
 
-  group: (id = '') -> new suthdraw.Group(id)
+  group: (id, x, y) -> new suthdraw.Group(id, x, y)
 
   line: (x1,y1, x2,y2) -> new suthdraw.Line(x1,y1, x2,y2)
 

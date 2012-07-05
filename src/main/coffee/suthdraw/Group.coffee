@@ -1,6 +1,6 @@
 class Group extends suthdraw.Element
 
-  constructor: (@id) ->
+  constructor: (@id, @x = 0, @y = 0) ->
     super()
     @type = 'group'
     @elements = []

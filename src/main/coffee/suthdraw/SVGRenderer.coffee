@@ -26,12 +26,12 @@ class SVGRenderer
         path = "M" + first + "C" + lines + "," + last
         """<path #{e.idIfSet()}class="sd-curve" fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}"></path>"""
       when 'group'
-        html2 = []
-        html2.push("""<g #{e.idIfSet()}class="sd-group">""")
+        html = []
+        html.push("""<g #{e.idIfSet()}#{SVGRenderer.groupTransform(e.x, e.y)}class="sd-group">""")
         for x in e.elements
-          html2.push(@renderElement(x))
-        html2.push("""</g>""")
-        html2.join('')
+          html.push(@renderElement(x))
+        html.push("""</g>""")
+        html.join('')
       when 'line'
         """<path #{e.idIfSet()}class="sd-line" stroke="#{e.strokeColor}" d="M#{crisp(e.x1)},#{crisp(e.y1)}L#{crisp(e.x2)},#{crisp(e.y2)}" stroke-width="#{e.strokeWidth}"></path>"""
       when 'oval'
@@ -57,6 +57,12 @@ class SVGRenderer
     (x) -> Math.round(x) + offset
 
   @roundCoord: (x) -> Math.round(x)
+
+  @groupTransform: (x, y) ->
+    if (x ? 0) > 0 && (y ? 0) > 0
+      """transform="translate(#{x ? 0},#{y ? 0})" """
+    else
+      ''
 
 window.suthdraw ?= {}
 window.suthdraw.SVGRenderer = new SVGRenderer()

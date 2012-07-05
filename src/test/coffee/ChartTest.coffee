@@ -12,6 +12,8 @@ curves = []
 
 drawGraph = () ->
 
+  startTime = new Date()
+
   chart = new suthchart.Chart(graphWidth, graphHeight)
 
   window.mydata = data # to aid debugging
@@ -65,14 +67,25 @@ drawGraph = () ->
   popupY = 515
   popupWidth = 150
   popupHeight = 35
-  popupGroup = chart.group("popup")
-  popupGroup.add(chart.rectangle(popupX + 1,popupY + 1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
-  popupGroup.add(chart.rectangle(popupX,popupY,popupWidth,popupHeight,5,5).withFillColor('black').withOpacity(0.75))
-  popupGroup.add(chart.text(popupX + 5,popupY + 10, "XX012345678").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withOpacity(0.75))
-  popupGroup.add(chart.text(popupX + 5,popupY + 25, "Royal Bank of Scotland").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withFontWeight('bold').withOpacity(0.75))
+  popupGroup = chart.group("popup",popupX,popupY)
+  popupGroup.add(chart.rectangle(1,1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
+  popupGroup.add(chart.rectangle(0,0,popupWidth,popupHeight,5,5).withFillColor('black').withOpacity(0.75))
+  popupGroup.add(chart.text(5,10, "XX012345678").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withOpacity(0.75))
+  popupGroup.add(chart.text(5, 25, "Royal Bank of Scotland").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withFontWeight('bold').withOpacity(0.75))
   chart.add(popupGroup)
 
+  endTime = new Date()
+  console.log("Time to construct graph object: #{endTime - startTime}")
+
   document.getElementById('graph').innerHTML = chart.render()
+
+  renderEndTime = new Date()
+  console.log("Time to render graph: #{renderEndTime - endTime}")
+
+  test = $('#graph')
+
+  domProcessingEndTime = new Date()
+  console.log("Time for browser to complete rendering the DOM: #{domProcessingEndTime - renderEndTime}")
 
   # console.log(chart.render())
   # console.log(chart)
@@ -88,6 +101,9 @@ drawGraph = () ->
     i = e.id
     # alert("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
   )
+
+  jQueryEndTime = new Date()
+  console.log("Time to set up jQuery event handling: #{jQueryEndTime - domProcessingEndTime}")
 
 
 downloadCount = 2
