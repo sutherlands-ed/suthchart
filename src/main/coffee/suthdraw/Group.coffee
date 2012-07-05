@@ -1,10 +1,9 @@
 class Group extends suthdraw.Element
 
-  type: 'group'
-
-  elements: []
-
-  constructor: () ->
+  constructor: (@id) ->
+    super()
+    @type = 'group'
+    @elements = []
 
   add: (element) ->
     @elements.push(element)

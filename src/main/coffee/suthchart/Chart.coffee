@@ -11,19 +11,9 @@ class Chart extends suthdraw.Drawing
       left: left
     }
 
-  xAxis: (title, min, max, majorStep, minorStep) ->
-    @xAxisTitle = title
-    @xAxisMin = min
-    @xAxisMax = max
-    @xAxisMajorStep = majorStep
-    @xAxisMinorStep = minorStep
+  xAxis: (@xAxisTitle, @xAxisMin, @xAxisMax, @xAxisMajorStep, @xAxisMinorStep) ->
 
-  yAxis: (title, min, max, majorStep, minorStep) ->
-    @yAxisTitle = title
-    @yAxisMin = min
-    @yAxisMax = max
-    @yAxisMajorStep = majorStep
-    @yAxisMinorStep = minorStep
+  yAxis: (@yAxisTitle, @yAxisMin, @yAxisMax, @yAxisMajorStep, @yAxisMinorStep) ->
 
   sx: (x) ->
     (x - @xAxisMin) * (@width - @margin.left - @margin.right) / (@xAxisMax - @xAxisMin) + @margin.left
@@ -31,7 +21,7 @@ class Chart extends suthdraw.Drawing
     ((@yAxisMax - y) - @yAxisMin) * (@height - @margin.top - @margin.bottom) / (@yAxisMax - @yAxisMin) + @margin.top
 
   grid: () ->
-    g = @group()
+    g = @group("grid")
     # X Grid
     for x in [@xAxisMin..@xAxisMax] by @xAxisMinorStep
       g.add(@line(@sx(x), @sy(@yAxisMin), @sx(x), @sy(@yAxisMax)).withStrokeWidth(0.1))
@@ -45,7 +35,7 @@ class Chart extends suthdraw.Drawing
     g
 
   axis: () ->
-    g = @group()
+    g = @group("axis")
     # X Axis
     g.add(@line(@sx(0), @sy(0), @sx(@xAxisMax), @sy(0)).withStrokeWidth(2))
     for x in [@xAxisMin..@xAxisMax] by @xAxisMinorStep

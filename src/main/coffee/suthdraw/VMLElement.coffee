@@ -2,12 +2,12 @@ class VMLElement extends suthdraw.ActiveElement
 
   setFillColor: (color) ->
     @element.fillcolor = color
-    this
+    @
 
   setOpacity: (opacity) ->
     @element.fill.opacity = opacity
     @element.stroke.opacity = opacity
-    this
+    @
 
   setRadius: (radius) ->
     left = VMLElement.numberInString(@element.style.left)
@@ -24,15 +24,15 @@ class VMLElement extends suthdraw.ActiveElement
     @element.style.top = top + "px"
     @element.style.width = width + "px"
     @element.style.height = height + "px"
-    this
+    @
 
   setStrokeColor: (color) ->
     @element.strokecolor = color
-    this
+    @
 
   setStrokeWidth: (width) ->
     @element.strokewidth = width
-    this
+    @
 
   # OBJECT FUNCTIONS
 

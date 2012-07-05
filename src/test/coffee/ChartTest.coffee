@@ -30,17 +30,21 @@ drawGraph = () ->
   chart.add(chart.axis())
 
   # Curves
+  curveGroup = chart.group("curves")
   _.each(curves, (curve,key) ->
     range = _.range(0, curve.length-1, 4)
     points = _.map(range, (i) ->
       [chart.sx(curve[i].yearsToMaturity), chart.sy(curve[i].yield)]
     )
-    chart.add(chart.curve(points).withStroke(0.5, 'red'))
+    curveGroup.add(chart.curve(points).withStroke(0.5, 'red'))
   )
+  chart.add(curveGroup)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   # Points
+  pointGroup = chart.group("points")
   for p,i in pointsx
-    c = chart.add(chart.circle(chart.sx(pointsx[i]), chart.sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5).withID(i)) # .attr({fill: "#888", opacity: 0.5})
+    c = pointGroup.add(chart.circle(chart.sx(pointsx[i]), chart.sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5).withID(i)) # .attr({fill: "#888", opacity: 0.5})
+  chart.add(pointGroup)
     # c.id = i
     # popup = null
     # label = null
@@ -61,12 +65,17 @@ drawGraph = () ->
   popupY = 515
   popupWidth = 150
   popupHeight = 35
-  chart.add(chart.rectangle(popupX + 1,popupY + 1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
-  chart.add(chart.rectangle(popupX,popupY,popupWidth,popupHeight,5,5).withFillColor('black').withOpacity(0.75))
-  chart.add(chart.text(popupX + 5,popupY + 10, "XX012345678").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withOpacity(0.75))
-  chart.add(chart.text(popupX + 5,popupY + 25, "Royal Bank of Scotland").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withFontWeight('bold').withOpacity(0.75))
+  popupGroup = chart.group("popup")
+  popupGroup.add(chart.rectangle(popupX + 1,popupY + 1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
+  popupGroup.add(chart.rectangle(popupX,popupY,popupWidth,popupHeight,5,5).withFillColor('black').withOpacity(0.75))
+  popupGroup.add(chart.text(popupX + 5,popupY + 10, "XX012345678").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withOpacity(0.75))
+  popupGroup.add(chart.text(popupX + 5,popupY + 25, "Royal Bank of Scotland").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withFontWeight('bold').withOpacity(0.75))
+  chart.add(popupGroup)
 
   document.getElementById('graph').innerHTML = chart.render()
+
+  # console.log(chart.render())
+  # console.log(chart)
 
   $('#graph').on('click', '.sd-circle', (event) ->
     e = chart.activeElement(this)

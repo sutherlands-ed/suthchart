@@ -1,12 +1,7 @@
 class Drawing
-  width: 500
-  height: 500
 
-  elements: []
-
-  constructor: (width = 500, height = 500) ->
-    @width = width
-    @height = height
+  constructor: (@width = 500, @height = 500) ->
+    @elements = []
 
   add: (element) ->
     @elements.push(element)
@@ -15,7 +10,7 @@ class Drawing
 
   curve: (points) -> new suthdraw.Curve(points)
 
-  group: () -> new suthdraw.Group()
+  group: (id = '') -> new suthdraw.Group(id)
 
   line: (x1,y1, x2,y2) -> new suthdraw.Line(x1,y1, x2,y2)
 
@@ -35,11 +30,9 @@ class Drawing
     else
       new suthdraw.SVGElement(element)
 
-  svg: () ->
-    suthdraw.SVGRenderer.render(this)
+  svg: () -> suthdraw.SVGRenderer.render(this)
 
-  vml: () ->
-    suthdraw.VMLRenderer.render(this)
+  vml: () -> suthdraw.VMLRenderer.render(this)
 
   render: () ->
     if hasSVG()

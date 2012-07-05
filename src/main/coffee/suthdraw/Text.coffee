@@ -1,38 +1,24 @@
 class Text extends suthdraw.Element
 
-  type: 'text'
-  fontFamily: 'Arial'
-  fontSize: 16 # size in pixels
-  textAnchor: 'middle' # 'start', 'middle' or 'end'
-  strokeColor: '#000'
-  rotationAngle: 0
-  fontWeight: 'normal'
+  constructor: (@x, @y, @text) ->
+    super()
+    @type = 'text'
+    @fontFamily = 'Arial'
+    @fontSize = 16 # size in pixels
+    @textAnchor = 'middle' # 'start', 'middle' or 'end'
+    @strokeColor = '#000'
+    @rotationAngle = 0
+    @fontWeight = 'normal'
 
-  constructor: (x, y, text) ->
-    @x = x
-    @y = y
-    @text = text
+  withFontSize: (@fontSize) -> @
 
-  withFontSize: (size) ->
-    @fontSize = size
-    this
+  withFontFamily: (@fontFamily) -> @
 
-  withFontFamily: (family) ->
-    @fontFamily = family
-    this
+  withFont: (@fontFamily, @fontSize) -> @
 
-  withFont: (family, size) ->
-    @fontFamily = family
-    @fontSize = size
-    this
+  withAnchoring: (@textAnchor) -> @
 
-  withAnchoring: (position) ->
-    @textAnchor = position
-    this
-
-  withFontWeight: (weight) ->
-    @fontWeight = weight
-    this
+  withFontWeight: (@fontWeight) -> @
 
   # textAnchor expressed as a textAlign.
   textAlign: () ->

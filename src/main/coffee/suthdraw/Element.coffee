@@ -1,43 +1,24 @@
 class Element
 
-  id: ""
+  constructor: ->
 
-  withStroke: (width, color) ->
-    @strokeWidth = width
-    @strokeColor = color
-    this
+  withStroke: (@strokeWidth, @strokeColor) -> @
 
-  withFill: (color) ->
-    @fillColor = color
-    this
+  withFill: (@fillColor) -> @
 
-  withStrokeWidth: (width) ->
-    @strokeWidth = width
-    this
+  withStrokeWidth: (@strokeWidth) -> @
 
-  withStrokeColor: (color) ->
-    @strokeColor = color
-    this
+  withStrokeColor: (@strokeColor) -> @
 
-  withFillColor: (color) ->
-    @fillColor = color
-    this
+  withFillColor: (@fillColor) -> @
 
-  withOpacity: (opacity) ->
-    @opacity = opacity
-    this
+  withOpacity: (@opacity) -> @
 
-  withCrispEdges: (state = true) ->
-    @crispEdges = state
-    this
+  withCrispEdges: (@crispEdges = true) -> @
 
-  withRotation: (angle) ->
-    @rotationAngle = angle
-    this
+  withRotation: (@rotationAngle) -> @
 
-  withID: (id) ->
-    @id = id
-    this
+  withID: (@id) -> @
 
   idIfSet: () ->
     if (@id == "") then "" else "data-id=\"#{@id}\""
