@@ -27,7 +27,7 @@ class VMLRenderer
         """<v:shape #{e.idIfSet()}class="sd-curve" style="position:absolute;width:1px;height:1px;top:0px;left:0px" coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill></v:fill></v:shape>"""
       when 'group'
         html = []
-        html.push("""<div sd-group" style="position:absolute;left:#{e.x}px;top:#{e.y}px;width:1px;height:1px">""")
+        html.push("""<div #{e.idIfSet()}class="sd-group" style="position:absolute;left:#{e.x}px;top:#{e.y}px;width:1px;height:1px">""")
         for x in e.elements
           html.push(@renderElement(x))
         html.push("""</div>""")

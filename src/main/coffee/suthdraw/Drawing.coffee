@@ -24,11 +24,10 @@ class Drawing
   # function.  This provides a standardised interface for interacting with such elements regardless of whether they
   # are VML or SVG.
   activeElement: (element) ->
-    c = element.attributes.class.nodeValue
-    if c.match(///rvml///)?
-      new suthdraw.VMLElement(element)
-    else
+    if element.ownerSVGElement?
       new suthdraw.SVGElement(element)
+    else
+      new suthdraw.VMLElement(element)
 
   svg: () -> suthdraw.SVGRenderer.render(this)
 
