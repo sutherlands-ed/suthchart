@@ -103,6 +103,10 @@ drawGraph = () ->
     # alert("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
   )
 
+  $('.sd-group[data-id="popup"]').on('click', (event) ->
+    console.log("Clicked on popup")
+  )
+
   jQueryEndTime = new Date()
   console.log("Time to set up jQuery event handling: #{jQueryEndTime - domProcessingEndTime}")
 
