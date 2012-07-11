@@ -12,6 +12,7 @@ curves = []
 
 drawGraph = () ->
 
+  console.log("---> Start")
   startTime = new Date()
 
   chart = new suthchart.Chart(graphWidth, graphHeight)

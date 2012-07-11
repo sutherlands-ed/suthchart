@@ -1,5 +1,8 @@
-<!DOCTYPE HTML>
-<html>
+<!--
+Note that setting the DOCTYPE of this document can prevent the VML from working!
+e.g. <!DOCTYPE HTML>
+-->
+<html xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
 	<title>suthchart ChartTest</title>
 	<script src="../../../lib/CoffeeScript/coffee-script.js"></script>
@@ -7,7 +10,9 @@
 	<script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
 
 	<script src="../../../target/suthchart.js"></script>
-	<style> .rvml { BEHAVIOR: url(#default#VML) } </style>
+	<style>
+		v\:* { behavior: url(#default#VML) }
+	</style>
 </head>
 <body>
 	<div id="graph"></div>
