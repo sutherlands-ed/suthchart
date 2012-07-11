@@ -31,5 +31,12 @@ class SVGElement extends suthdraw.ActiveElement
     matrix = @element.transform.baseVal.getItem(0).setTranslate(left, top)
     @
 
+  getText: () ->
+    @element.textContent
+
+  setText: (text) ->
+    @element.textContent = text
+    @
+
 window.suthdraw ?= {}
 window.suthdraw.SVGElement = SVGElement

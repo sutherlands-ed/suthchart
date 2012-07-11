@@ -43,7 +43,7 @@ class SVGRenderer
           ""
         else
           """transform="rotate(#{e.rotationAngle},#{e.x},#{e.y})" """
-        """<text #{e.idIfSet()}class="sd-text" x="#{e.x}" y="#{e.y}" style="#{e.style}" text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.strokeColor}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}" font-weight="#{e.fontWeight}" opacity="#{e.opacity}" #{transform}><tspan dy="#{e.fontSize * 0.35}">#{e.text}</tspan></text>"""
+        """<text #{e.idIfSet()}class="sd-text" x="#{e.x}" y="#{e.y + e.fontSize * 0.35}" style="#{e.style}" text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.strokeColor}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}" font-weight="#{e.fontWeight}" opacity="#{e.opacity}" #{transform}>#{e.text}</text>"""
       else
         console.log("Unhandled element type: #{e.type}")
 

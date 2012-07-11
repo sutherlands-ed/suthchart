@@ -55,6 +55,13 @@ class VMLElement extends suthdraw.ActiveElement
       @element.style.top = top 
     @
 
+  getText: () ->
+    @element.getElementsByTagName('textPath')[0].getAttribute('string')
+
+  setText: (text) ->
+    @element.getElementsByTagName('textPath')[0].setAttribute('string', text)
+    @
+
   # OBJECT FUNCTIONS
 
   @numberInString: (string) ->

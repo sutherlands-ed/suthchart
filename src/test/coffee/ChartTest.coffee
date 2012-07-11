@@ -66,7 +66,7 @@ drawGraph = () ->
   # Create a single manual popup for testing...
   popupX = 640
   popupY = 515
-  popupWidth = 150
+  popupWidth = 200
   popupHeight = 35
   popupGroup = chart.group("popup",popupX,popupY)
   popupGroup.add(chart.rectangle(1,1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
@@ -97,16 +97,19 @@ drawGraph = () ->
     window.x = e
     e.setStrokeColor('red').setStrokeWidth(2).setOpacity(0.75).setRadius(6).addClass('selected')
     i = e.id
-    console.log("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
+    # console.log("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
     false
   )
 
   $('#graph').on('hover', '.sd-circle', (event) ->
     e = chart.activeElement(this)
     i = e.id
-    popup = chart.activeElement($('.sd-group[data-id="popup"]')[0])
+    popupElement = $('.sd-group[data-id="popup"]')[0]
+    popup = chart.activeElement(popupElement)
     p = e.getPosition()
     popup.setPosition(p.left + 10, p.top - popupHeight - 10)
+    chart.activeElement($(popupElement).find('.sd-text')[0]).setText(data[i][0])
+    chart.activeElement($(popupElement).find('.sd-text')[1]).setText(data[i][2])
   )
 
   $('.sd-group[data-id="popup"]').on('click', (event) ->
