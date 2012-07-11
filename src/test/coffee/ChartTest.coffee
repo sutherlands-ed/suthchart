@@ -101,15 +101,23 @@ drawGraph = () ->
     false
   )
 
-  $('#graph').on('hover', '.sd-circle', (event) ->
+  $('#graph').on('mouseenter mouseleave', '.sd-circle', (event) ->
     e = chart.activeElement(this)
     i = e.id
     popupElement = $('.sd-group[data-id="popup"]')[0]
     popup = chart.activeElement(popupElement)
-    p = e.getPosition()
-    popup.setPosition(p.left + 10, p.top - popupHeight - 10)
-    chart.activeElement($(popupElement).find('.sd-text')[0]).setText(data[i][0])
-    chart.activeElement($(popupElement).find('.sd-text')[1]).setText(data[i][2])
+    if (event.type == 'mouseenter')
+      p = e.getPosition()
+      popup.setPosition(p.left + 10, p.top - popupHeight - 10)
+      chart.activeElement($(popupElement).find('.sd-text')[0]).setText(data[i][0])
+      chart.activeElement($(popupElement).find('.sd-text')[1]).setText(data[i][2])
+      popup.show()
+    else
+      e = chart.activeElement(this)
+      i = e.id
+      popupElement = $('.sd-group[data-id="popup"]')[0]
+      popup = chart.activeElement(popupElement)
+      popup.hide()
   )
 
   $('.sd-group[data-id="popup"]').on('click', (event) ->

@@ -37,6 +37,13 @@ class ActiveElement
     else
       @element.setAttribute('class', classesString)
 
+  hide: () ->
+    @element.style.display = 'none'
+    @
+
+  show: () ->
+    @element.style.display = ''
+    @
 
 window.suthdraw ?= {}
 window.suthdraw.ActiveElement = ActiveElement
