@@ -34,6 +34,27 @@ class VMLElement extends suthdraw.ActiveElement
     @element.strokewidth = width
     @
 
+  getPosition: ->
+    if @type == 'group'
+      style = @element.style
+      { left: VMLElement.numberInString(style.left), top: VMLElement.numberInString(style.top) }
+    else if @type = 'circle'
+      style = @element.style
+      cx = VMLElement.numberInString(style.left) + VMLElement.numberInString(style.width) * 0.5
+      cy = VMLElement.numberInString(style.top) + VMLElement.numberInString(style.height) * 0.5
+      { left: cx, top: cy }
+
+  setPosition: (left, top) ->
+    if @type == 'circle'
+      width = VMLElement.numberInString(style.width)
+      height = VMLElement.numberInString(style.height)
+      @element.style.left = left - width * 0.5
+      @element.style.top = top - width * 0.5
+    else
+      @element.style.left = left
+      @element.style.top = top 
+    @
+
   # OBJECT FUNCTIONS
 
   @numberInString: (string) ->

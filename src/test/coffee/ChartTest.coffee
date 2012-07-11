@@ -93,18 +93,28 @@ drawGraph = () ->
 
   $('#graph').on('click', '.sd-circle', (event) ->
     e = chart.activeElement(this)
-    selected = $('.sd-circle.selected')[0]
-    if selected?
-      olde = chart.activeElement(selected)
-      olde.setFillColor('#888').setStrokeColor('green').setStrokeWidth(1).setOpacity(0.5).setRadius(3).removeClass('selected')
+    deselect(chart)
+    window.x = e
     e.setStrokeColor('red').setStrokeWidth(2).setOpacity(0.75).setRadius(6).addClass('selected')
-    window.suthchart.x = this
     i = e.id
-    # alert("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
+    console.log("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
+    false
+  )
+
+  $('#graph').on('hover', '.sd-circle', (event) ->
+    e = chart.activeElement(this)
+    i = e.id
+    popup = chart.activeElement($('.sd-group[data-id="popup"]')[0])
+    p = e.getPosition()
+    popup.setPosition(p.left + 10, p.top - popupHeight - 10)
   )
 
   $('.sd-group[data-id="popup"]').on('click', (event) ->
     console.log("Clicked on popup")
+  )
+
+  $('#graph').on('click', (event) ->
+    deselect(chart)
   )
 
   jQueryEndTime = new Date()
@@ -122,3 +132,10 @@ $.getJSON("../data/curves-2012-05-29.json", (d) ->
   downloadCount -= 1
   if downloadCount == 0 then drawGraph()
 )
+
+deselect = (chart) ->
+  selected = $('.sd-circle.selected')[0]
+  if selected?
+    olde = chart.activeElement(selected)
+    olde.setFillColor('#888').setStrokeColor('green').setStrokeWidth(1).setOpacity(0.5).setRadius(3).removeClass('selected')
+

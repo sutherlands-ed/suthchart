@@ -20,6 +20,16 @@ class SVGElement extends suthdraw.ActiveElement
     @element.style.strokeWidth = width
     @
 
+  getPosition: ->
+    if @type == 'group'
+      matrix = @element.transform.baseVal.getItem(0).matrix
+      { left: matrix.e, top: matrix.f }
+    else if @type = 'circle'
+      { left: @element.cx.baseVal.value, top: @element.cy.baseVal.value }
+
+  setPosition: (left, top) ->
+    matrix = @element.transform.baseVal.getItem(0).setTranslate(left, top)
+    @
 
 window.suthdraw ?= {}
 window.suthdraw.SVGElement = SVGElement
