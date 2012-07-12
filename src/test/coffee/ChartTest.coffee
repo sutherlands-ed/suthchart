@@ -81,7 +81,7 @@ drawGraph = () ->
     e = chart.activeElement(this)
     deselect(chart)
     window.x = e
-    e.setStrokeColor('red').setStrokeWidth(2).setOpacity(0.75).setRadius(6).addClass('selected')
+    e.setStrokeColor('red').setFillColor('red').setOpacity(0.75).addClass('selected')
     i = e.id
     # console.log("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
     false
@@ -137,5 +137,5 @@ deselect = (chart) ->
   selected = $('.sd-circle.selected')[0]
   if selected?
     olde = chart.activeElement(selected)
-    olde.setFillColor('#888').setStrokeColor('green').setStrokeWidth(1).setOpacity(0.5).setRadius(3).removeClass('selected')
+    olde.setFillColor('#888').setStrokeColor('black').setStrokeWidth(1).setOpacity(0.5).setRadius(3).removeClass('selected')
 
