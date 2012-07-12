@@ -2,7 +2,7 @@ class VMLRenderer extends suthdraw.Renderer
 
   render: (drawing) ->
     html = []
-    html.push("""<div style="clip:rect(0px #{drawing.width}px #{drawing.height}px 0px); position:relative; width:#{drawing.width}px; display:inline-block; height:#{drawing.height}px; overflow:hidden; top:0px; left:0px">""")
+    html.push("""<div style="clip:rect(0px #{drawing.width}px #{drawing.height}px 0px); position:relative; width:#{drawing.width}px;display:inline-block;height:#{drawing.height}px;overflow:hidden;top:0px; left:0px;cursor:arrow">""")
     for e in drawing.elements
       html.push(@renderElement(e))
     html.push("""</div>""")
