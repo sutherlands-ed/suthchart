@@ -15,10 +15,27 @@ class Chart extends suthdraw.Drawing
 
   yAxis: (@yAxisTitle, @yAxisMin, @yAxisMax, @yAxisMajorStep, @yAxisMinorStep) ->
 
+  # X Scale
+  # Given an X value in the range of the graph X axis, return the X coordinate of the point on the graphic in
+  # pixels.
   sx: (x) ->
     (x - @xAxisMin) * (@width - @margin.left - @margin.right) / (@xAxisMax - @xAxisMin) + @margin.left
+
+  # Y Scale
+  # Given an Y value in the range of the graph Y axis, return the Y coordinate of the point on the graphic in
+  # pixels.
   sy: (y) ->
     ((@yAxisMax - y) - @yAxisMin) * (@height - @margin.top - @margin.bottom) / (@yAxisMax - @yAxisMin) + @margin.top
+
+  # Reverse X Scale
+  # Given the X coordinate of the point return the value on the range of the X axis.
+  rsx: (x) ->
+    (x - @margin.left) * (@xAxisMax - @xAxisMin) / (@width - @margin.left - @margin.right) + @xAxisMin
+
+  # Reverse Y Scale
+  # Given the Y coordinate of the point return the value on the range of the Y axis.
+  rsy: (y) ->
+    ((@height - @margin.top - @margin.bottom) - (y - @margin.top)) * (@yAxisMax - @yAxisMin) / (@height - @margin.bottom - @margin.top) + @yAxisMin
 
   grid: () ->
     g = @group("grid")

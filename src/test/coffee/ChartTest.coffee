@@ -117,6 +117,35 @@ drawGraph = () ->
     deselect(chart)
   )
 
+  # Drag zoom
+
+  dragStart = undefined
+
+  $('#graph').on('mousedown', (event) ->
+    # Record the start point of a drag
+    dragStart = { x: event.offsetX, y: event.offsetY }
+  )
+
+  $('#graph').on('mousemove', (event) ->
+    if dragStart?
+      x = event.offsetX
+      y = event.offsetY
+      dx = Math.abs(dragStart.x - x)
+      dy = Math.abs(dragStart.y - y)
+      if (dx + dy > 5) then # console.log("Dragging")
+  )
+
+  $('#graph').on('mouseup', (event) ->
+    if dragStart?
+      x = event.offsetX
+      y = event.offsetY
+      dx = Math.abs(dragStart.x - x)
+      dy = Math.abs(dragStart.y - y)
+      if dx + dy > 5
+        console.log("Drag area: #{chart.rsx(dragStart.x)},#{chart.rsy(dragStart.y)} - #{chart.rsx(x)},#{chart.rsy(y)}")
+      dragStart = undefined
+  )
+
   jQueryEndTime = new Date()
   console.log("Time to set up jQuery event handling: #{jQueryEndTime - domProcessingEndTime}")
 
