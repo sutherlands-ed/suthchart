@@ -2,7 +2,9 @@ class SVGRenderer extends suthdraw.Renderer
 
   render: (drawing) ->
     html = []
-    html.push("""<svg height="#{drawing.height}" version="1.1" width="#{drawing.width}" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; ">""")
+    # -webkit-user-select:none prevents the cursor changing to a text cursor when the mouse button is down over
+    # the SVG. 
+    html.push("""<svg height="#{drawing.height}" version="1.1" width="#{drawing.width}" xmlns="http://www.w3.org/2000/svg" style="overflow:hidden;position:relative;cursor:arrow;-webkit-user-select:none">""")
     for e in drawing.elements
       html.push(@renderElement(e))
     html.push("""</svg>""")
