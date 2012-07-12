@@ -2,13 +2,13 @@ class Text extends suthdraw.Element
 
   constructor: (@x, @y, @text) ->
     super()
-    @type = 'text'
-    @fontFamily = 'Arial'
-    @fontSize = 16 # size in pixels
-    @textAnchor = 'middle' # 'start', 'middle' or 'end'
-    @strokeColor = '#000'
+    @type          = 'text'
+    @fontFamily    = 'Arial'
+    @fontSize      = 16 # size in pixels
+    @textAnchor    = 'middle' # 'start', 'middle' or 'end'
+    @strokeColor   = '#000'
     @rotationAngle = 0
-    @fontWeight = 'normal'
+    @fontWeight    = 'normal'
 
   withFontSize: (@fontSize) -> @
 

@@ -7,7 +7,7 @@ coffee --compile --output target/lib src/main/coffee
 # Merge the js files together...
 
 suthdrawLibs=" \
-	   target/lib/suthdraw/Element.js \
+	target/lib/suthdraw/Element.js \
        target/lib/suthdraw/Circle.js \
        target/lib/suthdraw/Curve.js \
        target/lib/suthdraw/Group.js \

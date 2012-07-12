@@ -19,11 +19,11 @@ class SVGRenderer
         """<circle #{e.idIfSet()}class="sd-circle" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
       when 'curve'
         points = ([crisp(x[0]), crisp(x[1])] for x in e.points)
-        first = _.first(points)
-        rest = _.rest(points)
-        lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
-        last = _.last(points)
-        path = "M" + first + "C" + lines + "," + last
+        first  = _.first(points)
+        rest   = _.rest(points)
+        lines  = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
+        last   = _.last(points)
+        path   = "M" + first + "C" + lines + "," + last
         """<path #{e.idIfSet()}class="sd-curve" fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}"></path>"""
       when 'group'
         html = []

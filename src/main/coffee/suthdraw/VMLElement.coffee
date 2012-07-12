@@ -10,19 +10,19 @@ class VMLElement extends suthdraw.ActiveElement
     @
 
   setRadius: (radius) ->
-    left = VMLElement.numberInString(@element.style.left)
-    top = VMLElement.numberInString(@element.style.top)
-    width = VMLElement.numberInString(@element.style.width)
+    left   = VMLElement.numberInString(@element.style.left)
+    top    = VMLElement.numberInString(@element.style.top)
+    width  = VMLElement.numberInString(@element.style.width)
     height = VMLElement.numberInString(@element.style.height)
-    cx = left + (width / 2)
-    cy = top + (height / 2)
-    left = cx - radius
-    top = cy - radius
-    width = radius * 2
+    cx     = left + (width / 2)
+    cy     = top + (height / 2)
+    left   = cx - radius
+    top    = cy - radius
+    width  = radius * 2
     height = radius * 2
-    @element.style.left = left + "px"
-    @element.style.top = top + "px"
-    @element.style.width = width + "px"
+    @element.style.left   = left + "px"
+    @element.style.top    = top + "px"
+    @element.style.width  = width + "px"
     @element.style.height = height + "px"
     @
 

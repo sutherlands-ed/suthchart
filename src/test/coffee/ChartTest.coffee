@@ -17,11 +17,11 @@ drawGraph = () ->
 
   chart = new suthchart.Chart(graphWidth, graphHeight)
 
-  window.mydata = data # to aid debugging
+  window.mydata   = data # to aid debugging
   window.mycurves = curves # to aid debugging
   
-  pointsx = _.map(data, (d) -> parseFloat(d[7]))
-  pointsy = _.map(data, (d) -> parseFloat(d[9]))
+  pointsx    = _.map(data, (d) -> parseFloat(d[7]))
+  pointsy    = _.map(data, (d) -> parseFloat(d[9]))
   pointsdata = _.map(data, (d) -> d[0])
 
   chart.margins(50,50,50,50)
@@ -64,11 +64,11 @@ drawGraph = () ->
     # )
 
   # Create a single manual popup for testing...
-  popupX = 640
-  popupY = 515
-  popupWidth = 200
+  popupX      = 640
+  popupY      = 515
+  popupWidth  = 200
   popupHeight = 35
-  popupGroup = chart.group("popup",popupX,popupY)
+  popupGroup  = chart.group("popup",popupX,popupY)
   popupGroup.add(chart.rectangle(1,1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
   popupGroup.add(chart.rectangle(0,0,popupWidth,popupHeight,5,5).withFillColor('black').withOpacity(0.75))
   popupGroup.add(chart.text(5,10, "XX012345678").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withOpacity(0.75))
@@ -105,7 +105,7 @@ drawGraph = () ->
     e = chart.activeElement(this)
     i = e.id
     popupElement = $('.sd-group[data-id="popup"]')[0]
-    popup = chart.activeElement(popupElement)
+    popup        = chart.activeElement(popupElement)
     if (event.type == 'mouseenter')
       p = e.getPosition()
       popup.setPosition(p.left + 10, p.top - popupHeight - 10)
@@ -116,7 +116,7 @@ drawGraph = () ->
       e = chart.activeElement(this)
       i = e.id
       popupElement = $('.sd-group[data-id="popup"]')[0]
-      popup = chart.activeElement(popupElement)
+      popup        = chart.activeElement(popupElement)
       popup.hide()
   )
 

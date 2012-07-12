@@ -5,10 +5,10 @@ class Chart extends suthdraw.Drawing
 
   margins: (top, right, bottom, left) ->
     @margin = {
-      top: top
-      right: right
+      top:    top
+      right:  right
       bottom: bottom
-      left: left
+      left:   left
     }
 
   xAxis: (@xAxisTitle, @xAxisMin, @xAxisMax, @xAxisMajorStep, @xAxisMinorStep) ->

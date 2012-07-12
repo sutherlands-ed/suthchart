@@ -2,7 +2,7 @@ class Group extends suthdraw.Element
 
   constructor: (@id, @x = 0, @y = 0) ->
     super()
-    @type = 'group'
+    @type     = 'group'
     @elements = []
 
   add: (element) ->
