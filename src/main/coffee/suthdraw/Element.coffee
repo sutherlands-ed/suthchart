@@ -2,6 +2,10 @@ class Element
 
   constructor: ->
 
+  hidden: ->
+    @hidden = true
+    @
+
   withStroke: (@strokeWidth, @strokeColor) -> @
 
   withFill: (@fillColor) -> @
@@ -19,9 +23,6 @@ class Element
   withRotation: (@rotationAngle) -> @
 
   withID: (@id) -> @
-
-  idIfSet: () ->
-    if (@id == "") then "" else "data-id=\"#{@id}\""
 
 window.suthdraw ?= {}
 window.suthdraw.Element = Element

@@ -68,7 +68,7 @@ drawGraph = () ->
   popupY      = 515
   popupWidth  = 200
   popupHeight = 35
-  popupGroup  = chart.group("popup",popupX,popupY)
+  popupGroup  = chart.group("popup",popupX,popupY).hidden()
   popupGroup.add(chart.rectangle(1,1,popupWidth + 1,popupHeight + 1,5,5).withStrokeWidth(0).withFillColor('black').withOpacity(0.1))
   popupGroup.add(chart.rectangle(0,0,popupWidth,popupHeight,5,5).withFillColor('black').withOpacity(0.75))
   popupGroup.add(chart.text(5,10, "XX012345678").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withOpacity(0.75))

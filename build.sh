@@ -19,6 +19,7 @@ suthdrawLibs=" \
        target/lib/suthdraw/ActiveElement.js \
        target/lib/suthdraw/SVGElement.js \
        target/lib/suthdraw/VMLElement.js \
+       target/lib/suthdraw/Renderer.js \
        target/lib/suthdraw/SVGRenderer.js \
        target/lib/suthdraw/VMLRenderer.js"
 

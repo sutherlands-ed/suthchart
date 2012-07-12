@@ -1,4 +1,4 @@
-class SVGRenderer
+class SVGRenderer extends suthdraw.Renderer
 
   render: (drawing) ->
     html = []
@@ -16,7 +16,7 @@ class SVGRenderer
 
     switch e.type
       when 'circle'
-        """<circle #{e.idIfSet()}class="sd-circle" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
+        """<circle #{SVGRenderer.idIfSet(e)}class="sd-circle" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
       when 'curve'
         points = ([crisp(x[0]), crisp(x[1])] for x in e.points)
         first  = _.first(points)
@@ -24,26 +24,26 @@ class SVGRenderer
         lines  = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
         last   = _.last(points)
         path   = "M" + first + "C" + lines + "," + last
-        """<path #{e.idIfSet()}class="sd-curve" fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}"></path>"""
+        """<path #{SVGRenderer.idIfSet(e)}class="sd-curve" fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}"></path>"""
       when 'group'
         html = []
-        html.push("""<g #{e.idIfSet()}#{SVGRenderer.groupTransform(e.x, e.y)}class="sd-group">""")
+        html.push("""<g class="sd-group"#{SVGRenderer.idIfSet(e)}#{SVGRenderer.groupTransform(e.x, e.y)}#{SVGRenderer.style(e)}>""")
         for x in e.elements
           html.push(@renderElement(x))
         html.push("""</g>""")
         html.join('')
       when 'line'
-        """<path #{e.idIfSet()}class="sd-line" stroke="#{e.strokeColor}" d="M#{crisp(e.x1)},#{crisp(e.y1)}L#{crisp(e.x2)},#{crisp(e.y2)}" stroke-width="#{e.strokeWidth}"></path>"""
+        """<path #{SVGRenderer.idIfSet(e)}class="sd-line" stroke="#{e.strokeColor}" d="M#{crisp(e.x1)},#{crisp(e.y1)}L#{crisp(e.x2)},#{crisp(e.y2)}" stroke-width="#{e.strokeWidth}"></path>"""
       when 'oval'
-        """<ellipse #{e.idIfSet()}class="sd-oval" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
+        """<ellipse #{SVGRenderer.idIfSet(e)}class="sd-oval" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></circle>"""
       when 'rectangle'
-        """<rect #{e.idIfSet()}class="sd-rectangle" x="#{crisp(e.x)}" y="#{crisp(e.y)}" width="#{e.width}" height="#{e.height}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></rect>"""
+        """<rect #{SVGRenderer.idIfSet(e)}class="sd-rectangle" x="#{crisp(e.x)}" y="#{crisp(e.y)}" width="#{e.width}" height="#{e.height}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" style="opacity:#{e.opacity};stroke-width:#{e.strokeWidth}" opacity="#{e.opacity}"></rect>"""
       when 'text'
         transform = if (e.rotationAngle == 0)
           ""
         else
           """transform="rotate(#{e.rotationAngle},#{e.x},#{e.y})" """
-        """<text #{e.idIfSet()}class="sd-text" x="#{e.x}" y="#{e.y + e.fontSize * 0.35}" style="#{e.style}" text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.strokeColor}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}" font-weight="#{e.fontWeight}" opacity="#{e.opacity}" #{transform}>#{e.text}</text>"""
+        """<text #{SVGRenderer.idIfSet(e)}class="sd-text" x="#{e.x}" y="#{e.y + e.fontSize * 0.35}" style="#{e.style}" text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.strokeColor}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}" font-weight="#{e.fontWeight}" opacity="#{e.opacity}" #{transform}>#{e.text}</text>"""
       else
         console.log("Unhandled element type: #{e.type}")
 
