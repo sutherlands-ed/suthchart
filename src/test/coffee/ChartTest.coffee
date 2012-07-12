@@ -46,22 +46,8 @@ drawGraph = () ->
   # Points
   pointGroup = chart.group("points")
   for p,i in pointsx
-    c = pointGroup.add(chart.circle(chart.sx(pointsx[i]), chart.sy(pointsy[i]), dotSize).withStroke(1, 'green').withFill('#888').withOpacity(0.5).withID(i)) # .attr({fill: "#888", opacity: 0.5})
+    c = pointGroup.add(chart.circle(chart.sx(pointsx[i]), chart.sy(pointsy[i]), dotSize).withStroke(1, 'black').withFill('#888').withOpacity(0.5).withID(i))
   chart.add(pointGroup)
-    # c.id = i
-    # popup = null
-    # label = null
-
-    # c.hover( (o,i) ->
-    #   label = paper.set()
-    #   label.push(paper.text(60, 12, pointsdata[this.id]))
-    #   popup = paper.popup(this.attrs.cx + 10, this.attrs.cy, label, "right")
-    #   this.attr({'r': dotSize + 2})
-    # , (o,i) ->
-    #   this.attr({'r': dotSize})
-    #   popup.hide()
-    #   label.hide()
-    # )
 
   # Create a single manual popup for testing...
   popupX      = 640
@@ -108,7 +94,10 @@ drawGraph = () ->
     popup        = chart.activeElement(popupElement)
     if (event.type == 'mouseenter')
       p = e.getPosition()
-      popup.setPosition(p.left + 10, p.top - popupHeight - 10)
+      if graphWidth - p.left - popupWidth > 0
+        popup.setPosition(p.left + 10, p.top - popupHeight - 10)
+      else
+        popup.setPosition(p.left - 10 - popupWidth, p.top - popupHeight - 10)
       chart.activeElement($(popupElement).find('.sd-text')[0]).setText(data[i][0])
       chart.activeElement($(popupElement).find('.sd-text')[1]).setText(data[i][2])
       popup.show()
