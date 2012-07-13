@@ -4,13 +4,10 @@ dotSize = 3
 
 title = "Curves and Bonds"
 
-xAxis = {min: 0, max: 50, majorStep: 10, minorStep: 1, title: "Years to maturity"}
-yAxis = {min: 0, max: 30, majorStep: 10, minorStep: 1, title: "Yield"}
-
 data = []
 curves = []
 
-drawGraph = () ->
+drawGraph = (xMin, xMax, yMin, yMax) ->
 
   console.log("---> Start")
   startTime = new Date()
@@ -25,8 +22,8 @@ drawGraph = () ->
   pointsdata = _.map(data, (d) -> d[0])
 
   chart.margins(50,50,50,50)
-  chart.xAxis("Years to maturity", 0, 50, 10, 1)
-  chart.yAxis("Yield", 0, 30, 10, 1)
+  chart.xAxis("Years to maturity", xMin, xMax, 10, 1)
+  chart.yAxis("Yield", yMin, yMax, 10, 1)
 
   chart.add(chart.title("Curves and Bonds"))
   chart.add(chart.grid())
@@ -133,16 +130,27 @@ drawGraph = () ->
       dx = Math.abs(dragStart.x - x)
       dy = Math.abs(dragStart.y - y)
       if (dx + dy > 5) then # console.log("Dragging")
+    # On windows, the return of false here is essential to ensuring that sdfsdfas
+    false
   )
 
   $('#graph').on('mouseup', (event) ->
     if dragStart?
-      x = event.offsetX
-      y = event.offsetY
+      x  = event.offsetX
+      y  = event.offsetY
       dx = Math.abs(dragStart.x - x)
       dy = Math.abs(dragStart.y - y)
       if dx + dy > 5
-        console.log("Drag area: #{chart.rsx(dragStart.x)},#{chart.rsy(dragStart.y)} - #{chart.rsx(x)},#{chart.rsy(y)}")
+        dx1 = chart.rsx(dragStart.x)
+        dy1 = chart.rsy(dragStart.y)
+        dx2 = chart.rsx(x)
+        dy2 = chart.rsy(y)
+        x1  = Math.min(dx1,dx2)
+        x2  = Math.max(dx1,dx2)
+        y1  = Math.min(dy1,dy2)
+        y2  = Math.max(dy1,dy2)
+        drawGraph(x1,x2,y1,y2)
+        console.log("Drag area: #{dx1},#{dy1} - #{dx2},#{dy2}")
       dragStart = undefined
   )
 
@@ -154,12 +162,12 @@ downloadCount = 2
 $.getJSON("../data/2012-05-22.json", (d) ->
   data = d.data
   downloadCount -= 1
-  if downloadCount == 0 then drawGraph()
+  if downloadCount == 0 then drawGraph(0,50,0,30)
 )
 $.getJSON("../data/curves-2012-05-29.json", (d) ->
   curves = d
   downloadCount -= 1
-  if downloadCount == 0 then drawGraph()
+  if downloadCount == 0 then drawGraph(0,50,0,30)
 )
 
 deselect = (chart) ->
