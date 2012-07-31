@@ -24,5 +24,6 @@ class Element
 
   withID: (@id) -> @
 
-window.suthdraw ?= {}
-window.suthdraw.Element = Element
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Element = Element

@@ -71,5 +71,6 @@ class Chart extends suthdraw.Drawing
     g.add(@text(10, @sy((@yAxisMin + @yAxisMax)/2), @yAxisTitle).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
     g
 
-window.suthchart ?= {}
-window.suthchart.Chart = Chart
+root = global ? window
+root.suthchart ?= {}
+root.suthchart.Chart = Chart

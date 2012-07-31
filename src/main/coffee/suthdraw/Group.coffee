@@ -8,5 +8,6 @@ class Group extends suthdraw.Element
   add: (element) ->
     @elements.push(element)
 
-window.suthdraw ?= {}
-window.suthdraw.Group = Group
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Group = Group

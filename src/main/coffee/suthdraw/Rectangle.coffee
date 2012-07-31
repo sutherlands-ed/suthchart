@@ -9,5 +9,6 @@ class Rectangle extends suthdraw.Element
     @opacity     = 1
     @crispEdges  = true
 
-window.suthdraw ?= {}
-window.suthdraw.Rectangle = Rectangle
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Rectangle = Rectangle

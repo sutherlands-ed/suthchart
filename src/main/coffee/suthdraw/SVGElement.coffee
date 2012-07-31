@@ -38,5 +38,6 @@ class SVGElement extends suthdraw.ActiveElement
     @element.textContent = text
     @
 
-window.suthdraw ?= {}
-window.suthdraw.SVGElement = SVGElement
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.SVGElement = SVGElement

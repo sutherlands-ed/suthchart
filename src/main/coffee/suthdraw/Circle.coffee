@@ -9,5 +9,6 @@ class Circle extends suthdraw.Element
     @opacity     = 1
     @crispEdges  = true
 
-window.suthdraw ?= {}
-window.suthdraw.Circle = Circle
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Circle = Circle

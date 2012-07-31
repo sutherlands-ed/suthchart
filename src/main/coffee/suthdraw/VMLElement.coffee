@@ -67,5 +67,6 @@ class VMLElement extends suthdraw.ActiveElement
   @numberInString: (string) ->
     Number(string.match(///\d+///)?[0])
 
-window.suthdraw ?= {}
-window.suthdraw.VMLElement = VMLElement
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.VMLElement = VMLElement

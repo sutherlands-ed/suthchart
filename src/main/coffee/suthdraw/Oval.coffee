@@ -8,5 +8,6 @@ class Oval extends suthdraw.Element
     @fillColor   = '#888'
     @opacity     = 1
 
-window.suthdraw ?= {}
-window.suthdraw.Oval = Oval
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Oval = Oval

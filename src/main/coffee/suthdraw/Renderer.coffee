@@ -16,6 +16,7 @@ class Renderer
     else ''
 
 
-window.suthdraw ?= {}
-window.suthdraw.Renderer = Renderer
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Renderer = Renderer
 

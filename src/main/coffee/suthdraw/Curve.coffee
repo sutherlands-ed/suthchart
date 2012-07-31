@@ -9,5 +9,6 @@ class Curve extends suthdraw.Element
     @fill        = false
     @opacity     = 1
 
-window.suthdraw ?= {}
-window.suthdraw.Curve = Curve
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Curve = Curve

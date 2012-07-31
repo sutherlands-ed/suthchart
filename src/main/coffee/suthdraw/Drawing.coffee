@@ -39,12 +39,13 @@ class Drawing
     else
       suthdraw.VMLRenderer.render(this)
 
-window.suthdraw ?= {}
-window.suthdraw.Drawing = Drawing
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Drawing = Drawing
 
 # PRIVATE
 
 round = (x) -> Math.round(x)
 
-hasSVG = () -> window.SVGDocument?
+hasSVG = () -> root.SVGDocument?
 

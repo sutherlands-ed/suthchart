@@ -28,5 +28,6 @@ class Text extends suthdraw.Element
       when "end" then "right"
       else ""
 
-window.suthdraw ?= {}
-window.suthdraw.Text = Text
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Text = Text

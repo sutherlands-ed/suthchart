@@ -66,6 +66,7 @@ class SVGRenderer extends suthdraw.Renderer
     else
       ''
 
-window.suthdraw ?= {}
-window.suthdraw.SVGRenderer = new SVGRenderer()
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.SVGRenderer = new SVGRenderer()
 

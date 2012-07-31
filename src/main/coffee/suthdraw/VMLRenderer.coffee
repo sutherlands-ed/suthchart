@@ -81,6 +81,7 @@ class VMLRenderer extends suthdraw.Renderer
       """coordorigin="0,0" """
 
 
-window.suthdraw ?= {}
-window.suthdraw.VMLRenderer = new VMLRenderer()
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.VMLRenderer = new VMLRenderer()
 

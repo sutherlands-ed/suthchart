@@ -45,5 +45,6 @@ class ActiveElement
     @element.style.display = ''
     @
 
-window.suthdraw ?= {}
-window.suthdraw.ActiveElement = ActiveElement
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.ActiveElement = ActiveElement

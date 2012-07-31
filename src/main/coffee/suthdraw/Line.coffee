@@ -8,5 +8,6 @@ class Line extends suthdraw.Element
     @opacity     = 1
     @crispEdges  = true
 
-window.suthdraw ?= {}
-window.suthdraw.Line = Line
+root = global ? window
+root.suthdraw ?= {}
+root.suthdraw.Line = Line
