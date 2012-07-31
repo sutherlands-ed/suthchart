@@ -18,7 +18,7 @@ class XWilkinsonR
   #
   # @param dmin minimum of the data range
   # @param dmax maximum of the data range
-  # @param m number of axis labels
+  # @param m number of axis labels required
   # @param Q set of nice numbers
   # @param onlyLoose if true, the extreme labels will be outside the data range
   # @param w weights applied to the four optimization components (simplicity, coverage, density, and legibility)

@@ -1,6 +1,10 @@
 graphWidth = 1200
 graphHeight = 800
 dotSize = 3
+graphMarginLeft = 50
+graphMarginRight = 50
+graphMarginTop = 50
+graphMarginBottom = 50
 
 title = "Curves and Bonds"
 
@@ -21,13 +25,11 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
   pointsy    = _.map(data, (d) -> parseFloat(d[9]))
   pointsdata = _.map(data, (d) -> d[0])
 
-  chart.margins(50,50,50,50)
-  chart.xAxis("Years to maturity", xMin, xMax, 10, 1)
-  chart.yAxis("Yield", yMin, yMax, 10, 1)
-
-  chart.add(chart.title("Curves and Bonds"))
-  chart.add(chart.grid())
-  chart.add(chart.axis())
+  chart.margins(graphMarginTop, graphMarginRight, graphMarginBottom, graphMarginLeft)
+  [xStart, xEnd, xStep, score] = suthchart.XWilkinsonR.extended(xMin, xMax, 5, true)
+  chart.xAxis("Years to maturity", xStart, xEnd, xStep, 1)
+  [yStart, yEnd, yStep, score] = suthchart.XWilkinsonR.extended(yMin, yMax, 5, true)
+  chart.yAxis("Yield", yStart, yEnd, yStep, 1)
 
   # Curves
   curveGroup = chart.group("curves")
@@ -45,6 +47,12 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
   for p,i in pointsx
     c = pointGroup.add(chart.circle(chart.sx(pointsx[i]), chart.sy(pointsy[i]), dotSize).withStroke(1, 'black').withFill('#888').withOpacity(0.5).withID(i))
   chart.add(pointGroup)
+
+  chart.add(chart.mask())
+
+  chart.add(chart.title("Curves and Bonds"))
+  chart.add(chart.grid())
+  chart.add(chart.axis())
 
   # Create a single manual popup for testing...
   popupX      = 640
