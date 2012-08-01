@@ -48,7 +48,7 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
     c = pointGroup.add(chart.circle(chart.sx(pointsx[i]), chart.sy(pointsy[i]), dotSize).withStroke(1, 'black').withFill('#888').withOpacity(0.5).withID(i))
   chart.add(pointGroup)
 
-  chart.add(chart.mask())
+  chart.add(chart.mask(1.0))
 
   chart.add(chart.title("Curves and Bonds"))
   chart.add(chart.grid())
@@ -126,15 +126,23 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
 
   dragStart = undefined
 
+  graphOffsetX = $('#graph').offset().left
+  graphOffsetY = $('#graph').offset().top
+
+  eventOffsets = (event) ->
+    x = event.pageX - graphOffsetX
+    y = event.pageY - graphOffsetY
+    [x,y]
+
   $('#graph').on('mousedown', (event) ->
     # Record the start point of a drag
-    dragStart = { x: event.offsetX, y: event.offsetY }
+    [x,y] = eventOffsets(event)
+    dragStart = { x: x, y: y }
   )
 
   $('#graph').on('mousemove', (event) ->
     if dragStart?
-      x = event.offsetX
-      y = event.offsetY
+      [x,y] = eventOffsets(event)
       dx = Math.abs(dragStart.x - x)
       dy = Math.abs(dragStart.y - y)
       if (dx + dy > 5) then # console.log("Dragging")
@@ -144,8 +152,7 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
 
   $('#graph').on('mouseup', (event) ->
     if dragStart?
-      x  = event.offsetX
-      y  = event.offsetY
+      [x,y] = eventOffsets(event)
       dx = Math.abs(dragStart.x - x)
       dy = Math.abs(dragStart.y - y)
       if dx + dy > 5
