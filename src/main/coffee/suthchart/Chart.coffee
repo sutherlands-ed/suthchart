@@ -59,7 +59,7 @@ class Chart extends suthdraw.Drawing
       g.add(@line(@sx(x), @sy(@yAxisMin)-2, @sx(x), @sy(@yAxisMin)+2))
     for x in [@xAxisMin..@xAxisMax] by @xAxisMajorStep
       g.add(@line(@sx(x), @sy(@yAxisMin)-4, @sx(x), @sy(@yAxisMin)+4))
-      g.add(@text(@sx(x), @sy(@yAxisMin) + 10, x.toString()).withFont('Arial', 10).withStrokeColor('#888'))
+      g.add(@text(@sx(x), @sy(@yAxisMin) + 10, @strip(x).toString()).withFont('Arial', 10).withStrokeColor('#888'))
     g.add(@text(@sx((@xAxisMin + @xAxisMax) * 0.5), @height - (@margin.bottom * 0.5), @xAxisTitle).withFont('Arial', 12).withStrokeColor('#888'))
     # Y Axis
     g.add(@line(@sx(@xAxisMin), @sy(@yAxisMin), @sx(@xAxisMin), @sy(@yAxisMax)).withStrokeWidth(2))
@@ -67,7 +67,7 @@ class Chart extends suthdraw.Drawing
       g.add(@line(@sx(0)-2, @sy(y), @sx(0)+2, @sy(y)))
     for y in [@yAxisMin..@yAxisMax] by @yAxisMajorStep
       g.add(@line(@sx(@xAxisMin)-4, @sy(y), @sx(@xAxisMin)+4, @sy(y)))
-      g.add(@text(@sx(@xAxisMin)-5, @sy(y), y.toString()).withFont('Arial', 10).withStrokeColor('#888').withAnchoring('end'))
+      g.add(@text(@sx(@xAxisMin)-5, @sy(y), @strip(y).toString()).withFont('Arial', 10).withStrokeColor('#888').withAnchoring('end'))
     g.add(@text(10, @sy((@yAxisMin + @yAxisMax) * 0.5), @yAxisTitle).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
     g
 
@@ -79,6 +79,7 @@ class Chart extends suthdraw.Drawing
     g.add(@rectangle(@margin.left, @height - @margin.bottom, @width - @margin.right, @height + 1).withStroke(0,'white').withFill(color).withOpacity(opacity))
     g
 
+  strip: (number) -> parseFloat(number.toPrecision(12))
 
 root = global ? window
 root.suthchart ?= {}

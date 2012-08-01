@@ -107,7 +107,7 @@ class XWilkinsonR
                     z += 1
               k += 1
         j += 1
-      [bestLmin, bestLmax, bestLstep, bestScore]
+      [XWilkinsonR.strip(bestLmin), XWilkinsonR.strip(bestLmax), XWilkinsonR.strip(bestLstep), bestScore]
 
 
   # OBJECT FUNCTIONS
@@ -146,6 +146,8 @@ class XWilkinsonR
 
   @legibility: (lmin, lmax, lstep) ->
     1.0 # converted from R code which doesn't implement this method!
+
+  @strip: (number) -> parseFloat(number.toPrecision(12))
 
 root = global ? window
 root.suthchart ?= {}

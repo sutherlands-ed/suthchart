@@ -31,6 +31,9 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
   [yStart, yEnd, yStep, score] = suthchart.XWilkinsonR.extended(yMin, yMax, 5, true)
   chart.yAxis("Yield", yStart, yEnd, yStep, 1)
 
+  console.log("xStart = #{xStart}, xEnd = #{xEnd}, xStep = #{xStep}")
+  console.log("yStart = #{yStart}, yEnd = #{yEnd}, yStep = #{yStep}")
+
   # Curves
   curveGroup = chart.group("curves")
   _.each(curves, (curve,key) ->

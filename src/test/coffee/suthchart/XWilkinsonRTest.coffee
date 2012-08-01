@@ -48,5 +48,9 @@ exports.testXWilkinsonR = (test) ->
   r = root.suthchart.XWilkinsonR.extended(0, 100, 10)
   test.deepEqual(r, [0.0,100.0,10.0,0.7444444444444445])
 
+  # Test some cases which raise issues with floating point rounding
+  r = root.suthchart.XWilkinsonR.extended(3.1, 3.9, 5)
+  test.deepEqual(r, [3.1,3.9,0.2,0.6000000000000001])
+  
 
   test.done()
