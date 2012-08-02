@@ -11,7 +11,7 @@ title = "Curves and Bonds"
 data = []
 curves = []
 
-drawGraph = (xMin, xMax, yMin, yMax) ->
+drawGraph = (xMin, xMax, yMin, yMax) =>
 
   console.log("---> Start")
   startTime = new Date()
@@ -30,9 +30,6 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
   chart.xAxis("Years to maturity", xStart, xEnd, xStep, 1)
   [yStart, yEnd, yStep, score] = suthchart.XWilkinsonR.extended(yMin, yMax, 5, true)
   chart.yAxis("Yield", yStart, yEnd, yStep, 1)
-
-  console.log("xStart = #{xStart}, xEnd = #{xEnd}, xStep = #{xStep}")
-  console.log("yStart = #{yStart}, yEnd = #{yEnd}, yStep = #{yStep}")
 
   # Curves
   curveGroup = chart.group("curves")
@@ -127,50 +124,7 @@ drawGraph = (xMin, xMax, yMin, yMax) ->
 
   # Drag zoom
 
-  dragStart = undefined
-
-  graphOffsetX = $('#graph').offset().left
-  graphOffsetY = $('#graph').offset().top
-
-  eventOffsets = (event) ->
-    x = event.pageX - graphOffsetX
-    y = event.pageY - graphOffsetY
-    [x,y]
-
-  $('#graph').on('mousedown', (event) ->
-    # Record the start point of a drag
-    [x,y] = eventOffsets(event)
-    dragStart = { x: x, y: y }
-  )
-
-  $('#graph').on('mousemove', (event) ->
-    if dragStart?
-      [x,y] = eventOffsets(event)
-      dx = Math.abs(dragStart.x - x)
-      dy = Math.abs(dragStart.y - y)
-      if (dx + dy > 5) then # console.log("Dragging")
-    # On windows, the return of false here is essential to ensuring that sdfsdfas
-    false
-  )
-
-  $('#graph').on('mouseup', (event) ->
-    if dragStart?
-      [x,y] = eventOffsets(event)
-      dx = Math.abs(dragStart.x - x)
-      dy = Math.abs(dragStart.y - y)
-      if dx + dy > 5
-        dx1 = chart.rsx(dragStart.x)
-        dy1 = chart.rsy(dragStart.y)
-        dx2 = chart.rsx(x)
-        dy2 = chart.rsy(y)
-        x1  = Math.min(dx1,dx2)
-        x2  = Math.max(dx1,dx2)
-        y1  = Math.min(dy1,dy2)
-        y2  = Math.max(dy1,dy2)
-        drawGraph(x1,x2,y1,y2)
-        console.log("Drag area: #{dx1},#{dy1} - #{dx2},#{dy2}")
-      dragStart = undefined
-  )
+  chart.enableZoom($('#graph')[0], drawGraph)
 
   jQueryEndTime = new Date()
   console.log("Time to set up jQuery event handling: #{jQueryEndTime - domProcessingEndTime}")
