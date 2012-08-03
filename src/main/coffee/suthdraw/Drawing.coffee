@@ -2,6 +2,7 @@ class Drawing
 
   constructor: (@width = 500, @height = 500) ->
     @elements = []
+    if hasVML() then enableVMLRendering()
 
   add: (element) ->
     @elements.push(element)
@@ -49,3 +50,14 @@ round = (x) -> Math.round(x)
 
 hasSVG = () -> root.SVGDocument?
 
+hasVML = () -> document? && !hasSVG()
+
+enableVMLRendering = () ->
+  # Check whether the namespace has already been set.  Only set it once!
+  if ! (_.find(document.namespaces, (ns) -> ns.name == 'v'))?
+    document.namespaces.add('v','urn:schemas-microsoft-com:vml', '#default#VML')
+    if(!document.documentMode || document.documentMode < 8)
+      styles = document.createElement('style')
+      styles.type = 'text/css'
+      styles.styleSheet.cssText = 'v\:*{behavior: url(#default#VML);}'
+      document.getElementsByTagName('head')[0].appendChild(styles)

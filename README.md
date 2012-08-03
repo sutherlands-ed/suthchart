@@ -1,6 +1,6 @@
 # suthchart
 
-> This library is in early development and is not suitable for use at the current time!
+> This library is in early development and undergoing fairly rapid change, however, it is entirely usable for those features that have been implemented.  The `ChartTest.html` file demonstrates those features.
 
 This JavaScript library (written in CoffeeScript) is designed to assist in creating SVG and VML graphics that run efficiently on IE8.
 
@@ -11,3 +11,14 @@ The [Raphaël](http://raphaeljs.com/) JavaScript library provides a very effecti
 A further wrapper is provided to wrap around a selected element to allow subsequent runtime modification of elements independent of whether they are rendered in SVG or VML.
 
 `suthchart` (which incorporates `suthdraw`) is a thinner layer of functions to facilitate the creation of graphs: titles, axis, grids, etc.
+
+## Dependencies
+
+* `suthdraw` has dependencies upon [underscorejs](http://underscorejs.org).
+* `suthchart` currently has some additional dependencies upon [jQuery](http://jquery.com) (e.g. the zoom implementation code). Ideally this dependency may be removed in future or separated off so that the majority of the library can be used without requiring jQuery.
+
+## Trying it out
+
+To build the library run the script `build.sh` on a Unix / Mac OS environment.  The main requires `CoffeeScript` to already be installed on your machine.  The tests are performed using `nodeunit` which must also be separately installed.  Finally, the minimisation of the final library is carried out using the Google Closure Compiler which must be installed for this to work.
+
+Once compiled try out the library by viewing the file `/src/test/html/ChartTest.html`.
