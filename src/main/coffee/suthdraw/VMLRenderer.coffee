@@ -36,6 +36,15 @@ class VMLRenderer extends suthdraw.Renderer
         """<v:line #{VMLRenderer.idIfSet(e)}class="sd-line" from="#{crisp(e.x1)}px,#{crisp(e.y1)}px" to="#{crisp(e.x2)}px,#{crisp(e.y2)}px" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px"#{VMLRenderer.style(e)}><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke></v:line>"""
       when 'oval'
         """<v:oval #{VMLRenderer.idIfSet(e)}class="sd-oval" style="position:absolute;left:#{crisp(e.x-e.rx)}px;top:#{crisp(e.y-e.ry)}px;width:#{e.rx * 2}px;height:#{e.ry * 2}px#{VMLRenderer.styleAddition(e)}" strokecolor="#{e.strokeColor}" fillcolor="#{e.fillColor}"><v:stroke opacity="#{e.opacity}" miterlimit="8"></v:stroke><v:fill type="solid" opacity="#{e.opacity}"></v:fill></v:oval>"""
+      when 'path'
+        # FIXME: This code currently generates a curve, not a path!
+        points = ([crisp(x[0]), crisp(x[1])] for x in e.points)
+        first = _.first(points)
+        rest = _.rest(points)
+        lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
+        last = _.last(points)
+        path = "m" + first + "c" + lines + "," + last + " e"
+        """<v:shape #{VMLRenderer.idIfSet(e)}class="sd-curve" style="position:absolute;width:1px;height:1px;top:0px;left:0px#{VMLRenderer.styleAddition(e)}" coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill></v:fill></v:shape>"""
       when 'rectangle'
         if (e.rx > 0 || e.ry > 0)
           r = (e.rx + e.ry) / 2

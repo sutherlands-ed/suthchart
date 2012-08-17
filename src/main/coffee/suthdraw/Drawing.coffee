@@ -17,6 +17,8 @@ class Drawing
 
   oval: (x,y, rx,ry) -> new suthdraw.Oval(x,y, rx,ry)
 
+  path: (points) -> new suthdraw.Path(points)
+
   rectangle: (x1, y1, x2, y2, rx,ry) -> new suthdraw.Rectangle(x1,y1, x2,y2, rx,ry)
 
   text: (x, y, text) -> new suthdraw.Text(x, y, text)
