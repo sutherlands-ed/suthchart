@@ -63,5 +63,16 @@ exports.testNiceDateStringForMagnitude = (test) ->
 
   test.done()
 
+exports.testNiceRange = (test) ->
+  [s, e, m] = niceDates.niceRange(newDate(2012, 5, 4, 0, 0), newDate(2012, 5, 24, 0, 0))
+  r = niceDates.niceDateStringForMagnitude(s, m) + " - " + niceDates.niceDateStringForMagnitude(e, m)
+  test.equals(r, "4 May 2012 - 25 May 2012")
+
+  [s2, e2, m2] = niceDates.niceRange(newDate(2012, 5, 4, 0, 0), newDate(2012, 8, 24, 0, 0))
+  r2 = niceDates.niceDateStringForMagnitude(s2, m2) + " - " + niceDates.niceDateStringForMagnitude(e2, m2)
+  test.equals(r2, "May 2012 - Sep 2012")
+
+  test.done()
+
 newDate = (year, month = 1, day = 1, hour = 0, minute = 0, second = 0, millisecond = 0) ->
   new Date(year, month - 1, day, hour, minute, second, millisecond)

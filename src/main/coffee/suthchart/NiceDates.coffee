@@ -15,12 +15,11 @@ class NiceDates
     @TIMES                = [@HOUR, @MINUTE, @SECOND, @MILLISECOND]
 
 
-  # def niceRange(startDate: LocalDateTime, endDate: LocalDateTime): (LocalDateTime, LocalDateTime, Magnitude) = {
-  #   val magnitude = niceDateMagnitudeForDateRange(startDate, endDate)
-  #   val (niceStartDate, _) = bracketingNiceDates(startDate, magnitude)
-  #   val (_, niceEndDate) = bracketingNiceDates(endDate, magnitude)
-  #   (niceStartDate, niceEndDate, magnitude)
-  # }
+  niceRange: (startDate, endDate) ->
+    magnitude = @niceDateMagnitudeForDateRange(startDate, endDate)
+    [niceStartDate, _] = @bracketingNiceDates(startDate, magnitude)
+    [_, niceEndDate] = @bracketingNiceDates(endDate, magnitude)
+    [niceStartDate, niceEndDate, magnitude]
 
 
   # def niceDates(startDate: LocalDateTime, endDate: LocalDateTime): (Seq[LocalDateTime], Magnitude) = {
