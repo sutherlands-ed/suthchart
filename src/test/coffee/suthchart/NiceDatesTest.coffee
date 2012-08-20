@@ -50,5 +50,18 @@ exports.testNearestNiceDate = (test) ->
 
   test.done()
 
+exports.testNiceDateStringForMagnitude = (test) ->
+  date = newDate(2012, 5, 20, 12, 36, 29, 766)
+
+  test.equal(niceDates.niceDateStringForMagnitude(date, niceDates.MILLISECOND), "20 May 2012, 12:36:29.766")
+  test.equal(niceDates.niceDateStringForMagnitude(date, niceDates.SECOND), "20 May 2012, 12:36:30")
+  test.equal(niceDates.niceDateStringForMagnitude(date, niceDates.MINUTE), "20 May 2012, 12:36")
+  test.equal(niceDates.niceDateStringForMagnitude(date, niceDates.HOUR), "20 May 2012, 1pm")
+  test.equal(niceDates.niceDateStringForMagnitude(date, niceDates.DAY), "21 May 2012")
+  test.equal(niceDates.niceDateStringForMagnitude(date, niceDates.MONTH), "Jun 2012")
+  test.equal(niceDates.niceDateStringForMagnitude(date, niceDates.YEAR), "2012")
+
+  test.done()
+
 newDate = (year, month = 1, day = 1, hour = 0, minute = 0, second = 0, millisecond = 0) ->
   new Date(year, month - 1, day, hour, minute, second, millisecond)
