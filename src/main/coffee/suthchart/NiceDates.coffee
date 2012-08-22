@@ -40,7 +40,7 @@ class NiceDates
         end = niceEndDate.getFullYear()
         numbers = suthchart.NiceNumbers.niceNumbers(start, end)
         new Date(n, 1, 1, 0, 0) for n in numbers
-      when x then throw error
+      else throw Error("Magnitude not handled!")
     [dates, magnitude]
 
 
@@ -83,32 +83,32 @@ class NiceDates
       when @MILLISECOND
         [date, date]
       when @SECOND
-        minDate = new Date(date.getUTCFullYear(), date.getMonth(), date.getDate(),
+        minDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
           date.getHours(), date.getMinutes(), date.getSeconds())
         maxDate = minDate.plusSeconds(1)
         [minDate, maxDate]
       when @MINUTE
-        minDate = new Date(date.getUTCFullYear(), date.getMonth(), date.getDate(),
+        minDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
           date.getHours(), date.getMinutes())
         maxDate = minDate.plusMinutes(1)
         [minDate, maxDate]
       when @HOUR
-        minDate = new Date(date.getUTCFullYear(), date.getMonth(), date.getDate(), date.getHours(), 0)
+        minDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), 0)
         maxDate = minDate.plusHours(1)
         [minDate, maxDate]
       when @DAY
-        minDate = new Date(date.getUTCFullYear(), date.getMonth(), date.getDate(), 0, 0)
+        minDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0)
         maxDate = minDate.plusDays(1)
         [minDate, maxDate]
       when @MONTH
-        minDate = new Date(date.getUTCFullYear(), date.getMonth(), 1, 0, 0)
+        minDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0)
         maxDate = minDate.plusMonths(1)
         [minDate, maxDate]
       when @YEAR
-        minDate = new Date(date.getUTCFullYear(), 0, 1, 0, 0)
+        minDate = new Date(date.getFullYear(), 0, 1, 0, 0)
         maxDate = minDate.plusYears(1)
         [minDate, maxDate]
-      when x then throw error
+      else throw Error("Magnitude not handled!")
 
 
   ###
@@ -137,105 +137,85 @@ class NiceDates
         nearest.format("mmm yyyy")
       when @YEAR
         nearest.format("yyyy")
-      when x then throw error
+      else throw Error("Magnitude not handled!")
 
 
-  # def dateStringRelativeToPrevious(previousDate: LocalDateTime, date: LocalDateTime): String = {
-  #   val hmcOpt = highestMagnitudeChangeOption(previousDate, date)
-  #   val lmcOpt = lowestMagnitudeChangeOption(previousDate, date)
-  #   val stringOpt = for {
-  #     hmc <- hmcOpt
-  #     lmc <- lmcOpt
-  #   } yield {
-  #     val magnitudes = Magnitude.PRINTING_ORDER.filter(m => hmc >= m && m >= lmc)
-  #     dateStringWithMagnitudes(date, magnitudes)
-  #   }
-  #   stringOpt.getOrElse("''")
-  # }
+  dateStringRelativeToPrevious: (previousDate, date) ->
+    hmc = @highestMagnitudeChangeOption(previousDate, date)
+    lmc = @lowestMagnitudeChangeOption(previousDate, date)
+    if (hmc? && lmc?)
+      magnitudes = _.filter(@PRINTING_ORDER, (m) -> hmc.millis >= m.millis && m.millis >= lmc.millis)
+      @dateStringWithMagnitudes(date, magnitudes)
+    else ''
 
-  # def dateStringWithMagnitudes(date: LocalDateTime, magnitudes: Seq[Magnitude]): String = {
-  #   // Reorder magnitudes into PRINTING_ORDER and remove all but one entry related to time...
-  #   val orderedMags = Magnitude.PRINTING_ORDER.intersect(magnitudes).foldRight(Seq[Magnitude]()){
-  #     case (m, Nil) => Seq(m)
-  #     case (m, head :: tail) if Magnitude.TIMES.contains(head) && Magnitude.TIMES.contains(m) =>
-  #       head :: tail
-  #     case (m, head :: tail) => m :: head :: tail
-  #   }
-  #   val strings = for (m <- orderedMags) yield {
-  #     m match {
-  #       case Magnitude.MILLISECOND | Magnitude.SECOND | Magnitude.MINUTE | Magnitude.HOUR =>
-  #         timeStringForMagnitudes(date, magnitudes)
-  #       case Magnitude.DAY => dayStringForMagnitudes(date, magnitudes)
-  #       case Magnitude.WEEK => weekStringForMagnitudes(date, magnitudes)
-  #       case Magnitude.MONTH => monthStringForMagnitudes(date, magnitudes)
-  #       case Magnitude.YEAR => yearStringForMagnitudes(date, magnitudes)
-  #       case x => throw new RuntimeException(f"Magnitude of $x not supported!")
-  #     }
-  #   }
-  #   strings.mkString(" ")
-  # }
+  dateStringWithMagnitudes: (date, magnitudes) ->
+    # Reorder magnitudes into PRINTING_ORDER and remove all but one entry related to time...
+    orderedMags = _.chain(@PRINTING_ORDER).intersection(magnitudes).map( (m) =>
+      switch m
+        when @MILLISECOND, @SECOND, @MINUTE, @HOUR then @MILLISECOND
+        else m
+    ).uniq(true).value()
+    strings = for m in orderedMags
+      switch m
+        when @MILLISECOND
+          @timeStringForMagnitudes(date, magnitudes)
+        when @DAY then @dayStringForMagnitudes(date, magnitudes)
+        when @WEEK then @weekStringForMagnitudes(date, magnitudes)
+        when @MONTH then @monthStringForMagnitudes(date, magnitudes)
+        when @YEAR then @yearStringForMagnitudes(date, magnitudes)
+        else throw Error("Magnitude not handled!")
+    strings.join(" ")
 
-  # private def timeStringForMagnitudes(date: LocalDateTime, magnitudes: Seq[Magnitude]): String = {
-  #   val mags = Seq(Magnitude.HOUR, Magnitude.MINUTE, Magnitude.SECOND, Magnitude.MILLISECOND) intersect magnitudes
-  #   val strings = for (m <- mags) yield {
-  #     m match {
-  #       case Magnitude.HOUR =>
-  #         if (magnitudes.contains(Magnitude.MINUTE) && !Magnitude.MILLISECOND.isDefault(date)) date.toString("h:")
-  #         else date.toString("Ka").toLowerCase
-  #       case Magnitude.MINUTE =>
-  #         if (magnitudes.contains(Magnitude.HOUR)) {
-  #           if (Magnitude.MILLISECOND.isDefault(date)) ""
-  #           else date.toString("mm")
-  #         } else date.toString("+mm") + "mins"
-  #       case Magnitude.SECOND => date.toString("ss")
-  #       case Magnitude.MILLISECOND => date.toString("SSS")
-  #       case x => throw new RuntimeException(f"Magnitude of $x not supported!")
-  #     }
-  #   }
-  #   strings.mkString + (if (magnitudes.contains(Magnitude.DAY)) " on" else "")
-  # }
+  timeStringForMagnitudes: (date, magnitudes) ->
+    mags = _.intersection([@HOUR, @MINUTE, @SECOND, @MILLISECOND], magnitudes)
+    strings = for m in mags
+      switch m
+        when @HOUR
+          if (_.contains(magnitudes, @MINUTE) && !@MILLISECOND.isDefault(date)) then date.format("hh:")
+          else date.format("htt").toLowerCase()
+        when @MINUTE
+          if (_.contains(magnitudes, @HOUR))
+            if (@MINUTE.isDefault(date)) then ""
+            else date.format("MM")
+          else date.format("+MM") + "mins"
+        when @SECOND then date.format("ss")
+        when @MILLISECOND then date.format("l")
+        else throw Error("Magnitude not handled!")
+    strings.join('') + (if (_.contains(magnitudes, @DAY)) then " on" else "")
 
-  # private def dayStringForMagnitudes(date: LocalDateTime, magnitudes: Seq[Magnitude]): String = {
-  #   date.toString("d") + (if (!magnitudes.contains(Magnitude.MONTH)) date.toString(" MMM") else "")
-  # }
+  dayStringForMagnitudes: (date, magnitudes) ->
+    date.format("d") + (if (!_.contains(magnitudes, @MONTH)) then date.format(" mmm") else "")
 
-  # private def weekStringForMagnitudes(date: LocalDateTime, magnitudes: Seq[Magnitude]): String = {
-  #   date.toString("w")
-  # }
+  weekStringForMagnitudes: (date, magnitudes) ->
+    date.format("w")
 
-  # private def monthStringForMagnitudes(date: LocalDateTime, magnitudes: Seq[Magnitude]): String = {
-  #   date.toString("MMM")
-  # }
+  monthStringForMagnitudes: (date, magnitudes) ->
+    date.format("mmm")
 
-  # private def yearStringForMagnitudes(date: LocalDateTime, magnitudes: Seq[Magnitude]): String = {
-  #   date.toString("YYYY")
-  # }
+  yearStringForMagnitudes: (date, magnitudes) ->
+    date.format("yyyy")
 
 
-  # private def highestMagnitudeChangeOption(date1: LocalDateTime, date2: LocalDateTime): Option[Magnitude] = {
-  #   val hmc = if (date1.getYear != date2.getYear) Magnitude.YEAR
-  #   else if (date1.getMonthOfYear != date2.getMonthOfYear) Magnitude.MONTH
-  #   else if (date1.getDayOfMonth != date2.getDayOfMonth) Magnitude.DAY
-  #   else if (date1.getHourOfDay != date2.getHourOfDay) Magnitude.HOUR
-  #   else if (date1.getMinuteOfHour != date2.getMinuteOfHour) Magnitude.MINUTE
-  #   else if (date1.getSecondOfMinute != date2.getSecondOfMinute) Magnitude.SECOND
-  #   else if (date1.getMillisOfSecond != date2.getMillisOfSecond) Magnitude.MILLISECOND
-  #   else null
-  #   Option(hmc)
-  # }
+  highestMagnitudeChangeOption: (date1, date2) ->
+    if (date1.getFullYear() != date2.getFullYear()) then @YEAR
+    else if (date1.getMonth() != date2.getMonth()) then @MONTH
+    else if (date1.getDate() != date2.getDate()) then @DAY
+    else if (date1.getHours() != date2.getHours()) then @HOUR
+    else if (date1.getMinutes() != date2.getMinutes()) then @MINUTE
+    else if (date1.getSeconds() != date2.getSeconds()) then @SECOND
+    else if (date1.getMilliseconds() != date2.getMilliseconds()) then @MILLISECOND
+    else undefined
 
 
-  # private def lowestMagnitudeChangeOption(date1: LocalDateTime, date2: LocalDateTime): Option[Magnitude] = {
-  #   val lmc = if (date1.getMillisOfSecond != date2.getMillisOfSecond) Magnitude.MILLISECOND
-  #   else if (date1.getSecondOfMinute != date2.getSecondOfMinute) Magnitude.SECOND
-  #   else if (date1.getMinuteOfHour != date2.getMinuteOfHour) Magnitude.MINUTE
-  #   else if (date1.getHourOfDay != date2.getHourOfDay) Magnitude.HOUR
-  #   else if (date1.getDayOfMonth != date2.getDayOfMonth) Magnitude.DAY
-  #   else if (date1.getMonthOfYear != date2.getMonthOfYear) Magnitude.MONTH
-  #   else if (date1.getYear != date2.getYear) Magnitude.YEAR
-  #   else null
-  #   Option(lmc)
-  # }
+  lowestMagnitudeChangeOption: (date1, date2) ->
+    if (date1.getMilliseconds() != date2.getMilliseconds()) then @MILLISECOND
+    else if (date1.getSeconds() != date2.getSeconds()) then @SECOND
+    else if (date1.getMinutes() != date2.getMinutes()) then @MINUTE
+    else if (date1.getHours() != date2.getHours()) then @HOUR
+    else if (date1.getDate() != date2.getDate()) then @DAY
+    else if (date1.getMonth() != date2.getMonth()) then @MONTH
+    else if (date1.getFullYear() != date2.getFullYear()) then @YEAR
+    else undefined
 
 
   class Magnitude
@@ -247,6 +227,10 @@ class NiceDates
       new Magnitude(name, factor * @millis, isDefaultFunction)
 
     isDefault: (date) -> @isDefaultFunction(date)
+
+    toString: () -> @name
+
+    equals: (other) -> @name == other.name
 
 root = global ? window
 root.suthchart ?= {}
@@ -280,6 +264,6 @@ Date::plusMonths ||= (months) ->
   d
 Date::plusYears ||= (years) ->
   d = new Date(this)
-  d.setUTCFullYear(this.getUTCFullYear() + years)
+  d.setUTCFullYear(this.getFullYear() + years)
   d
 

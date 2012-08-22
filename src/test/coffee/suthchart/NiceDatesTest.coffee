@@ -96,5 +96,54 @@ exports.testNiceDates = (test) ->
 
   test.done()
 
+exports.testDateStringRelativeToPrevious = (test) ->
+
+  testDates = (start, end) ->
+    [nd,m] = niceDates.niceDates(start, end)
+    firstDate = nd[0]
+    firstMags = _.chain(niceDates.STANDARD_DECREASING).reverse().dropWhile( (x) ->
+      x.isDefault(firstDate)
+    ).value()
+    first = niceDates.dateStringWithMagnitudes(firstDate, firstMags)
+    s = [first].concat(_.chain(nd).sliding(2).map( (dates) ->
+      niceDates.dateStringRelativeToPrevious(dates[0], dates[1])
+    ).value())
+    s.join(",")
+
+  r = niceDates.dateStringRelativeToPrevious(newDate(2012,5,4,0,0), newDate(2012,6,3,0,0))
+  test.equal(r, "3 Jun")
+  r2 = niceDates.dateStringRelativeToPrevious(newDate(2012,5,4,10,5), newDate(2012,5,4,10,54))
+  test.equal(r2, "+54mins")
+
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2020,3,2,0,0)),
+    "2012,2014,2016,2018,2020,2022")
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2012,12,2,0,0)),
+    "May 2012,Jul,Sep,Nov,Jan 2013")
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2012,5,10,12,0)),
+    "1am on 2 May 2012,4 May,6 May,8 May,10 May,12 May")
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2012,5,4,12,0)),
+    "4 May 2012,5am,10am,3pm")
+  test.equal(testDates(newDate(2012,5,4,10,5), newDate(2012,5,4,10,54)),
+    "10am on 4 May 2012,+10mins,+20mins,+30mins,+40mins,+50mins,11am")
+
+  test.done()
+
+# PRIVATE
+
 newDate = (year, month = 1, day = 1, hour = 0, minute = 0, second = 0, millisecond = 0) ->
   new Date(year, month - 1, day, hour, minute, second, millisecond)
+
+_.mixin({
+    dropWhile: (array, f) ->
+      match = _.find(array, (x) -> !f(x))
+      if (match)
+        indexOfMatch = array.indexOf(match)
+        array.slice(indexOfMatch)
+      else []
+    sliding: (array, window) ->
+      end = array.length - window
+      array[i..(i+window-1)] for i in [0..end]
+    reverse: (array) ->
+      array.slice().reverse()
+  })
+
