@@ -1,3 +1,5 @@
+_ = require("underscore.js")
+
 root = global ? window
 
 niceDates = new suthchart.NiceDates()
@@ -71,6 +73,26 @@ exports.testNiceRange = (test) ->
   [s2, e2, m2] = niceDates.niceRange(newDate(2012, 5, 4, 0, 0), newDate(2012, 8, 24, 0, 0))
   r2 = niceDates.niceDateStringForMagnitude(s2, m2) + " - " + niceDates.niceDateStringForMagnitude(e2, m2)
   test.equals(r2, "May 2012 - Sep 2012")
+
+  test.done()
+
+exports.testNiceDates = (test) ->
+
+  testDates = (start, end) ->
+    [nd,m] = niceDates.niceDates(start, end)
+    strings = _.map(nd, (d) -> niceDates.niceDateStringForMagnitude(d, m))
+    strings.join(",")
+
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2020,3,2,0,0)),
+    "2012,2014,2016,2018,2020,2022")
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2012,12,2,0,0)),
+    "May 2012,Jul 2012,Sep 2012,Nov 2012,Jan 2013")
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2012,5,10,12,0)),
+    "2 May 2012,4 May 2012,6 May 2012,8 May 2012,10 May 2012,12 May 2012")
+  test.equal(testDates(newDate(2012,5,4,0,0), newDate(2012,5,4,12,0)),
+    "4 May 2012, 12am,4 May 2012, 5am,4 May 2012, 10am,4 May 2012, 3pm")
+  test.equal(testDates(newDate(2012,5,4,10,5), newDate(2012,5,4,10,54)),
+    "4 May 2012, 10:00,4 May 2012, 10:10,4 May 2012, 10:20,4 May 2012, 10:30,4 May 2012, 10:40,4 May 2012, 10:50,4 May 2012, 11:00")
 
   test.done()
 

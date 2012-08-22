@@ -27,15 +27,20 @@ suthdrawLibs=" \
        "
 
 suthchartLibs=" \
+       target/lib/suthchart/DateFormat.js \
        target/lib/suthchart/Chart.js \
        target/lib/suthchart/NiceDates.js \
+       target/lib/suthchart/NiceNumbers.js \
        target/lib/suthchart/XWilkinsonR.js \
        "
 
 cat $suthdrawLibs > target/suthdraw.js
 cat $suthdrawLibs $suthchartLibs > target/suthchart.js
+echo 'var _ = require("underscore.js");' > target/underscore.js
+cat target/underscore.js target/suthchart.js > target/suthchartWithUnderscore.js
 
-nodeunit target/suthchart.js target/testlib/suthchart 
+nodeunit target/suthchartWithUnderscore.js target/testlib/suthchart 
+# nodeunit target/suthchart.js target/testlib/suthchart 
 
 testExitStatus=$?
 
