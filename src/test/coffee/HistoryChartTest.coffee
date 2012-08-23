@@ -26,7 +26,7 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   pointsdata = _.map(data, (d) -> d[0])
 
   chart.margins(graphMarginTop, graphMarginRight, graphMarginBottom, graphMarginLeft)
-  chart.linearXAxis("Date", xMin, xMax)
+  chart.dateXAxis("Date", xMin, xMax)
   chart.linearYAxis("Spread (bps)", yMin, yMax)
 
   console.log("Figured out axes")

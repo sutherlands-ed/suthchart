@@ -2,7 +2,7 @@ _ = require("underscore.js")
 
 root = global ? window
 
-niceDates = new suthchart.NiceDates()
+niceDates = suthchart.NiceDates
 
 exports.testMagnitudes = (test) ->
 
@@ -100,15 +100,7 @@ exports.testDateStringRelativeToPrevious = (test) ->
 
   testDates = (start, end) ->
     [nd,m] = niceDates.niceDates(start, end)
-    firstDate = nd[0]
-    firstMags = _.chain(niceDates.STANDARD_DECREASING).reverse().dropWhile( (x) ->
-      x.isDefault(firstDate)
-    ).value()
-    first = niceDates.dateStringWithMagnitudes(firstDate, firstMags)
-    s = [first].concat(_.chain(nd).sliding(2).map( (dates) ->
-      niceDates.dateStringRelativeToPrevious(dates[0], dates[1])
-    ).value())
-    s.join(",")
+    niceDates.niceLabels(nd).join(",")
 
   r = niceDates.dateStringRelativeToPrevious(newDate(2012,5,4,0,0), newDate(2012,6,3,0,0))
   test.equal(r, "3 Jun")
@@ -134,18 +126,4 @@ exports.testDateStringRelativeToPrevious = (test) ->
 
 newDate = (year, month = 1, day = 1, hour = 0, minute = 0, second = 0, millisecond = 0) ->
   new Date(year, month - 1, day, hour, minute, second, millisecond)
-
-_.mixin({
-    dropWhile: (array, f) ->
-      match = _.find(array, (x) -> !f(x))
-      if (match)
-        indexOfMatch = array.indexOf(match)
-        array.slice(indexOfMatch)
-      else []
-    sliding: (array, window) ->
-      end = array.length - window
-      array[i..(i+window-1)] for i in [0..end]
-    reverse: (array) ->
-      array.slice().reverse()
-  })
 

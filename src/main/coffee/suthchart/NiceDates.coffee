@@ -23,6 +23,7 @@ class NiceDates
 
 
   niceDates: (startDate, endDate) ->
+    console.log("startDate = #{startDate}, endDate = #{endDate}")
     [niceStartDate, niceEndDate, magnitude] = @niceRange(startDate, endDate)
     dates = switch magnitude
       when @MILLISECOND, @MINUTE, @HOUR, @DAY
@@ -42,6 +43,17 @@ class NiceDates
         new Date(n, 1, 1, 0, 0) for n in numbers
       else throw Error("Magnitude not handled!")
     [dates, magnitude]
+
+
+  niceLabels: (dates) ->
+    firstDate = dates[0]
+    firstMags = _.chain(@STANDARD_DECREASING).reverse().dropWhile( (x) ->
+      x.isDefault(firstDate)
+    ).value()
+    first = @dateStringWithMagnitudes(firstDate, firstMags)
+    [first].concat(_.chain(dates).sliding(2).map( (d) =>
+      @dateStringRelativeToPrevious(d[0], d[1])
+    ).value())
 
 
   niceDateMagnitudeForDateRange: (startDate, endDate) ->
@@ -234,7 +246,7 @@ class NiceDates
 
 root = global ? window
 root.suthchart ?= {}
-root.suthchart.NiceDates = NiceDates
+root.suthchart.NiceDates = new NiceDates()
 
 # Add JodaTime like functionality to the built in Date object
 
@@ -266,4 +278,21 @@ Date::plusYears ||= (years) ->
   d = new Date(this)
   d.setUTCFullYear(this.getFullYear() + years)
   d
+
+# Add extra functions to underscore.js and fix issue with reverse mutating the original array.
+
+_.mixin({
+    dropWhile: (array, f) ->
+      match = _.find(array, (x) -> !f(x))
+      if (match)
+        indexOfMatch = array.indexOf(match)
+        array.slice(indexOfMatch)
+      else []
+    sliding: (array, window) ->
+      end = array.length - window
+      array[i..(i+window-1)] for i in [0..end]
+    reverse: (array) ->
+      array.slice().reverse()
+  })
+
 

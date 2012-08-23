@@ -26,7 +26,6 @@ class LinearAxis extends Axis
 
   constructor: (@title, @spaceLengthPx, @startMarginPx, @endMarginPx, min, max, @reverse = false) ->
     [@min, @max, @majorStep, score] = suthchart.XWilkinsonR.extended(min, max, 5, true)
-    console.log("@min = #{@min}, @max = #{@max}")
     @minorStep = @majorStep / 10
     super(@title, @spaceLengthPx, @startMarginPx, @endMarginPx, @min, @max, @reverse)
 
@@ -38,5 +37,14 @@ class LinearAxis extends Axis
 root.suthchart.LinearAxis = LinearAxis
 
 class DateAxis extends Axis
+
+  constructor: (@title, @spaceLengthPx, @startMarginPx, @endMarginPx, min, max, @reverse = false) ->
+    [niceDates, m] = suthchart.NiceDates.niceDates(new Date(min), new Date(max))
+    @min = niceDates[0].getTime()
+    @max = niceDates[niceDates.length-1].getTime()
+    super(@title, @spaceLengthPx, @startMarginPx, @endMarginPx, @min, @max, @reverse)
+    @majorSteps = (x.getTime() for x in niceDates)
+    @minorSteps = @majorSteps
+    @majorLabels = suthchart.NiceDates.niceLabels(niceDates)
 
 root.suthchart.DateAxis = DateAxis

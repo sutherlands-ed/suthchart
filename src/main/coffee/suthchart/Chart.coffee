@@ -11,6 +11,13 @@ class Chart extends suthdraw.Drawing
       left:   left
     }
 
+  dateXAxis: (@xAxisTitle, xAxisMin, xAxisMax) ->
+    @xAxis = new suthchart.DateAxis(@xAxisTitle, @width, @margin.left, @margin.right, xAxisMin, xAxisMax, false)
+    @xAxisMin = @xAxis.min
+    @xAxisMax = @xAxis.max
+    @sx = @xAxis.scale
+    @rsx = @xAxis.rScale
+
   linearXAxis: (@xAxisTitle, xAxisMin, xAxisMax) ->
     @xAxis = new suthchart.LinearAxis(@xAxisTitle, @width, @margin.left, @margin.right, xAxisMin, xAxisMax, false)
     @xAxisMin = @xAxis.min
