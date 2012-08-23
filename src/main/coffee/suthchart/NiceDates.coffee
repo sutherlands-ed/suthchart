@@ -23,7 +23,6 @@ class NiceDates
 
 
   niceDates: (startDate, endDate) ->
-    console.log("startDate = #{startDate}, endDate = #{endDate}")
     [niceStartDate, niceEndDate, magnitude] = @niceRange(startDate, endDate)
     dates = switch magnitude
       when @MILLISECOND, @MINUTE, @HOUR, @DAY
@@ -282,17 +281,20 @@ Date::plusYears ||= (years) ->
 # Add extra functions to underscore.js and fix issue with reverse mutating the original array.
 
 _.mixin({
-    dropWhile: (array, f) ->
-      match = _.find(array, (x) -> !f(x))
-      if (match)
-        indexOfMatch = array.indexOf(match)
-        array.slice(indexOfMatch)
-      else []
-    sliding: (array, window) ->
-      end = array.length - window
-      array[i..(i+window-1)] for i in [0..end]
-    reverse: (array) ->
-      array.slice().reverse()
-  })
+
+  dropWhile: (array, f) ->
+    i = 0
+    arrayLength = array.length
+    while (i < arrayLength && f(array[i])) then i++
+    array.slice(i)
+
+  sliding: (array, window) ->
+    end = array.length - window
+    array[i..(i+window-1)] for i in [0..end]
+
+  reverse: (array) ->
+    array.slice().reverse()
+
+})
 
 

@@ -88,6 +88,8 @@ class Chart extends suthdraw.Drawing
       y = event.pageY - graphOffsetY
       [x,y]
 
+    $(graphElement).off('mousedown mousemove mouseup')
+
     $(graphElement).on('mousedown', (event) ->
       # Record the start point of a drag
       [x,y] = eventOffsets(event)

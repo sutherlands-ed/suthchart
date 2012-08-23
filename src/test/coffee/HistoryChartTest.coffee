@@ -29,35 +29,26 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   chart.dateXAxis("Date", xMin, xMax)
   chart.linearYAxis("Spread (bps)", yMin, yMax)
 
-  console.log("Figured out axes")
-
   # Curves
   marketSpreadHistoryPoints = _.map(dates, (date, i) ->
     [chart.sx(date), chart.sy(Number(data.spreadValues.marketSpreadHistory[i]))]
   )
 
-  console.log("marketSpreadHistoryPoints.length = #{marketSpreadHistoryPoints.length}")
-
   modelSpreadHistoryPoints = _.map(dates, (date, i) ->
     [chart.sx(date), chart.sy(Number(data.spreadValues.modelSpreadHistory[i]))]
   )
-
-  console.log("modelSpreadHistoryPoints.length = #{modelSpreadHistoryPoints.length}")
 
   pathGroup = chart.group("lines")
   pathGroup.add(chart.path(marketSpreadHistoryPoints).withStroke(0.5, 'red'))
   pathGroup.add(chart.path(modelSpreadHistoryPoints).withStroke(0.5, 'green'))
   chart.add(pathGroup)
                 
-  console.log("Lines added")
-
   chart.add(chart.mask(1.0))
 
   chart.add(chart.title("History Chart"))
 
   chart.add(chart.grid())
   chart.add(chart.axis())
-  console.log(chart)
 
   endTime = new Date()
   console.log("Time to construct graph object: #{endTime - startTime}")
@@ -108,9 +99,6 @@ yMin = _.min([_.min(data.spreadValues.marketSpreadHistory), _.min(data.spreadVal
 yMax = _.max([_.max(data.spreadValues.marketSpreadHistory), _.max(data.spreadValues.modelSpreadHistory)])
 
 yMin = 0
-
-console.log("xMin = #{xMin}")
-console.log("xMax = #{xMax}")
 
 drawGraph(xMin, xMax, yMin, yMax)
 
