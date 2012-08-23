@@ -11,43 +11,31 @@ class Chart extends suthdraw.Drawing
       left:   left
     }
 
-  xAxis: (@xAxisTitle, @xAxisMin, @xAxisMax, @xAxisMajorStep, @xAxisMinorStep) ->
+  linearXAxis: (@xAxisTitle, xAxisMin, xAxisMax) ->
+    @xAxis = new suthchart.LinearAxis(@xAxisTitle, @width, @margin.left, @margin.right, xAxisMin, xAxisMax, false)
+    @xAxisMin = @xAxis.min
+    @xAxisMax = @xAxis.max
+    @sx = @xAxis.scale
+    @rsx = @xAxis.rScale
 
-  yAxis: (@yAxisTitle, @yAxisMin, @yAxisMax, @yAxisMajorStep, @yAxisMinorStep) ->
-
-  # X Scale
-  # Given an X value in the range of the graph X axis, return the X coordinate of the point on the graphic in
-  # pixels.
-  sx: (x) ->
-    (x - @xAxisMin) * (@width - @margin.left - @margin.right) / (@xAxisMax - @xAxisMin) + @margin.left
-
-  # Y Scale
-  # Given an Y value in the range of the graph Y axis, return the Y coordinate of the point on the graphic in
-  # pixels.
-  sy: (y) ->
-    (@yAxisMax - y) * (@height - @margin.top - @margin.bottom) / (@yAxisMax - @yAxisMin) + @margin.top
-
-  # Reverse X Scale
-  # Given the X coordinate of the point return the value on the range of the X axis.
-  rsx: (x) ->
-    (x - @margin.left) * (@xAxisMax - @xAxisMin) / (@width - @margin.left - @margin.right) + @xAxisMin
-
-  # Reverse Y Scale
-  # Given the Y coordinate of the point return the value on the range of the Y axis.
-  rsy: (y) ->
-    ((@height - @margin.top - @margin.bottom) - (y - @margin.top)) * (@yAxisMax - @yAxisMin) / (@height - @margin.bottom - @margin.top) + @yAxisMin
+  linearYAxis: (@yAxisTitle, yAxisMin, yAxisMax) ->
+    @yAxis = new suthchart.LinearAxis(@yAxisTitle, @height, @margin.bottom, @margin.top, yAxisMin, yAxisMax, true)
+    @yAxisMin = @yAxis.min
+    @yAxisMax = @yAxis.max
+    @sy = @yAxis.scale
+    @rsy = @yAxis.rScale
 
   grid: () ->
     g = @group("grid")
     # X Grid
-    for x in [@xAxisMin..@xAxisMax] by @xAxisMinorStep
+    for x in @xAxis.minorSteps
       g.add(@line(@sx(x), @sy(@yAxisMin), @sx(x), @sy(@yAxisMax)).withStrokeWidth(0.1))
-    for x in [@xAxisMin..@xAxisMax] by @xAxisMajorStep
+    for x in @xAxis.majorSteps
       g.add(@line(@sx(x), @sy(@yAxisMin), @sx(x), @sy(@yAxisMax)).withStrokeWidth(0.2))
     # Y Grid
-    for y in [@yAxisMin..@yAxisMax] by @yAxisMinorStep
+    for y in @yAxis.minorSteps
       g.add(@line(@sx(@xAxisMin), @sy(y), @sx(@xAxisMax), @sy(y)).withStrokeWidth(0.1))
-    for y in [@yAxisMin..@yAxisMax] by @yAxisMajorStep
+    for y in @yAxis.majorSteps
       g.add(@line(@sx(@xAxisMin), @sy(y), @sx(@xAxisMax), @sy(y)).withStrokeWidth(0.2))
     g
 
@@ -55,19 +43,19 @@ class Chart extends suthdraw.Drawing
     g = @group("axis")
     # X Axis
     g.add(@line(@sx(@xAxisMin), @sy(@yAxisMin), @sx(@xAxisMax), @sy(@yAxisMin)).withStrokeWidth(2))
-    for x in [@xAxisMin..@xAxisMax] by @xAxisMinorStep
+    for x in @xAxis.minorSteps
       g.add(@line(@sx(x), @sy(@yAxisMin)-2, @sx(x), @sy(@yAxisMin)+2))
-    for x in [@xAxisMin..@xAxisMax] by @xAxisMajorStep
+    for x,i in @xAxis.majorSteps
       g.add(@line(@sx(x), @sy(@yAxisMin)-4, @sx(x), @sy(@yAxisMin)+4))
-      g.add(@text(@sx(x), @sy(@yAxisMin) + 10, @strip(x).toString()).withFont('Arial', 10).withStrokeColor('#888'))
+      g.add(@text(@sx(x), @sy(@yAxisMin) + 10, @xAxis.majorLabels[i]).withFont('Arial', 10).withStrokeColor('#888'))
     g.add(@text(@sx((@xAxisMin + @xAxisMax) * 0.5), @height - (@margin.bottom * 0.5), @xAxisTitle).withFont('Arial', 12).withStrokeColor('#888'))
     # Y Axis
     g.add(@line(@sx(@xAxisMin), @sy(@yAxisMin), @sx(@xAxisMin), @sy(@yAxisMax)).withStrokeWidth(2))
-    for y in [@yAxisMin..@yAxisMax] by @yAxisMinorStep
+    for y in @yAxis.minorSteps
       g.add(@line(@sx(0)-2, @sy(y), @sx(0)+2, @sy(y)))
-    for y in [@yAxisMin..@yAxisMax] by @yAxisMajorStep
+    for y,i in @yAxis.majorSteps
       g.add(@line(@sx(@xAxisMin)-4, @sy(y), @sx(@xAxisMin)+4, @sy(y)))
-      g.add(@text(@sx(@xAxisMin)-5, @sy(y), @strip(y).toString()).withFont('Arial', 10).withStrokeColor('#888').withAnchoring('end'))
+      g.add(@text(@sx(@xAxisMin)-5, @sy(y), @yAxis.majorLabels[i]).withFont('Arial', 10).withStrokeColor('#888').withAnchoring('end'))
     g.add(@text(10, @sy((@yAxisMin + @yAxisMax) * 0.5), @yAxisTitle).withFont('Arial', 12).withStrokeColor('#888').withRotation(-90))
     g
 

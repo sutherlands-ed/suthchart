@@ -28,6 +28,7 @@ suthdrawLibs=" \
 
 suthchartLibs=" \
        target/lib/suthchart/DateFormat.js \
+       target/lib/suthchart/Axis.js \
        target/lib/suthchart/Chart.js \
        target/lib/suthchart/NiceDates.js \
        target/lib/suthchart/NiceNumbers.js \

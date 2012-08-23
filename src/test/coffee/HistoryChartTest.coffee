@@ -25,15 +25,9 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   pointsy    = _.map(data, (d) -> parseFloat(d[9]))
   pointsdata = _.map(data, (d) -> d[0])
 
-  console.log("xMin = #{xMin}, xMax = #{xMax}")
-
   chart.margins(graphMarginTop, graphMarginRight, graphMarginBottom, graphMarginLeft)
-  [xStart, xEnd, xStep, score] = suthchart.XWilkinsonR.extended(xMin, xMax, 5, true)
-  chart.xAxis("Date", xStart, xEnd, xStep, 500000000)
-  [yStart, yEnd, yStep, score] = suthchart.XWilkinsonR.extended(yMin, yMax, 5, true)
-  chart.yAxis("Spread (bps)", yStart, yEnd, yStep, 10)
-
-  console.log("xStart = #{xStart}, xEnd = #{xEnd}, xStep = #{xStep}, score = #{score}, ")
+  chart.linearXAxis("Date", xMin, xMax)
+  chart.linearYAxis("Spread (bps)", yMin, yMax)
 
   console.log("Figured out axes")
 
@@ -60,8 +54,10 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   chart.add(chart.mask(1.0))
 
   chart.add(chart.title("History Chart"))
+
   chart.add(chart.grid())
   chart.add(chart.axis())
+  console.log(chart)
 
   endTime = new Date()
   console.log("Time to construct graph object: #{endTime - startTime}")

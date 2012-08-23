@@ -7,21 +7,21 @@ exports.testChart = (test) ->
 
   # Simple axis
 
-  c.xAxis("Test", 0, 100, 10, 1)
+  c.linearXAxis("Test", 0, 100, 10, 1)
   test.equal(c.sx(0), 50)
   test.equal(c.sx(100), 1050)
 
-  c.yAxis("Test", 0, 100, 10, 1)
+  c.linearYAxis("Test", 0, 100, 10, 1)
   test.equal(c.sy(0), 1050)
   test.equal(c.sy(100), 50)
 
   # Axis starting after 0
 
-  c.xAxis("Test", 100, 200, 10, 1)
+  c.linearXAxis("Test", 100, 200, 10, 1)
   test.equal(c.sx(100), 50)
   test.equal(c.sx(200), 1050)
 
-  c.yAxis("Test", 100, 200, 10, 1)
+  c.linearYAxis("Test", 100, 200, 10, 1)
   test.equal(c.sy(100), 1050)
   test.equal(c.sy(200), 50)
 

@@ -26,10 +26,8 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   pointsdata = _.map(data, (d) -> d[0])
 
   chart.margins(graphMarginTop, graphMarginRight, graphMarginBottom, graphMarginLeft)
-  [xStart, xEnd, xStep, score] = suthchart.XWilkinsonR.extended(xMin, xMax, 5, true)
-  chart.xAxis("Years to maturity", xStart, xEnd, xStep, 1)
-  [yStart, yEnd, yStep, score] = suthchart.XWilkinsonR.extended(yMin, yMax, 5, true)
-  chart.yAxis("Yield", yStart, yEnd, yStep, 1)
+  chart.linearXAxis("Years to maturity", xMin, xMax)
+  chart.linearYAxis("Yield", yMin, yMax)
 
   # Curves
   curveGroup = chart.group("curves")
