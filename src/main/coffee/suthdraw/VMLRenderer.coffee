@@ -43,8 +43,8 @@ class VMLRenderer extends suthdraw.Renderer
         rest = _.rest(points)
         lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
         last = _.last(points)
-        path = "m" + first + "c" + lines + "," + last + " e"
-        """<v:shape #{VMLRenderer.idIfSet(e)}class="sd-curve" style="position:absolute;width:1px;height:1px;top:0px;left:0px#{VMLRenderer.styleAddition(e)}" coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill></v:fill></v:shape>"""
+        path = "m" + first + "l" + lines + "," + last + " e"
+        """<v:shape #{VMLRenderer.idIfSet(e)}class="sd-path" style="position:absolute;width:1px;height:1px;top:0px;left:0px#{VMLRenderer.styleAddition(e)}" coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill></v:fill></v:shape>"""
       when 'rectangle'
         if (e.rx > 0 || e.ry > 0)
           r = (e.rx + e.ry) / 2
