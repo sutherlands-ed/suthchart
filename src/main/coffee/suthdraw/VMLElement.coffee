@@ -56,10 +56,10 @@ class VMLElement extends suthdraw.ActiveElement
     @
 
   getText: () ->
-    @element.getElementsByTagName('textPath')[0].getAttribute('string')
+    @element.getElementsByTagName('textpath')[0].string
 
   setText: (text) ->
-    @element.getElementsByTagName('textPath')[0].setAttribute('string', text)
+    @element.getElementsByTagName('textpath')[0].string = text
     @
 
   # OBJECT FUNCTIONS

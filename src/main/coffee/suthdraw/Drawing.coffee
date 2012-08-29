@@ -63,3 +63,9 @@ enableVMLRendering = () ->
       styles.type = 'text/css'
       styles.styleSheet.cssText = 'v\:*{behavior: url(#default#VML);}'
       document.getElementsByTagName('head')[0].appendChild(styles)
+
+# Setup default console.log for IE
+
+root.console ?= {}
+root.console.log ?= () ->
+  # Do nothing if no implementation of Console.log exists.
