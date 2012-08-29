@@ -1,6 +1,7 @@
 class Element
 
   constructor: ->
+    @opacity = 1
 
   hidden: ->
     @hidden = true
@@ -23,6 +24,8 @@ class Element
   withRotation: (@rotationAngle) -> @
 
   withID: (@id) -> @
+
+  withCursor: (@cursor) -> @
 
 root = global ? window
 root.suthdraw ?= {}
