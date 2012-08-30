@@ -18,7 +18,7 @@ class SVGRenderer extends suthdraw.Renderer
 
     switch e.type
       when 'circle'
-        """<circle #{SVGRenderer.idIfSet(e)}class="sd-circle" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "opacity:#{e.opacity};stroke-width:#{e.strokeWidth}")}opacity="#{e.opacity}"></circle>"""
+        """<circle #{SVGRenderer.idIfSet(e)}class="sd-circle" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "fill-opacity:#{e.opacity};stroke-opacity:#{e.opacity};stroke-width:#{e.strokeWidth}")}></circle>"""
       when 'curve'
         points = ([crisp(x[0]), crisp(x[1])] for x in e.points)
         # Ensure that the number of points is always divisible by 3.
@@ -40,7 +40,7 @@ class SVGRenderer extends suthdraw.Renderer
       when 'line'
         """<path #{SVGRenderer.idIfSet(e)}class="sd-line" stroke="#{e.strokeColor}" d="M#{crisp(e.x1)},#{crisp(e.y1)}L#{crisp(e.x2)},#{crisp(e.y2)}" stroke-width="#{e.strokeWidth}"#{SVGRenderer.style(e)}></path>"""
       when 'oval'
-        """<ellipse #{SVGRenderer.idIfSet(e)}class="sd-oval" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "opacity:#{e.opacity};stroke-width:#{e.strokeWidth}")}opacity="#{e.opacity}"></circle>"""
+        """<ellipse #{SVGRenderer.idIfSet(e)}class="sd-oval" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "fill-opacity:#{e.opacity};stroke-opacity:#{e.opacity};stroke-width:#{e.strokeWidth}")}"></circle>"""
       when 'path'
         points = ([crisp(x[0]), crisp(x[1])] for x in e.points)
         first  = _.first(points)
@@ -49,13 +49,13 @@ class SVGRenderer extends suthdraw.Renderer
         path   = "M" + first + "L" + lines
         """<path #{SVGRenderer.idIfSet(e)}class="sd-curve" fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}"#{SVGRenderer.style(e)}></path>"""
       when 'rectangle'
-        """<rect #{SVGRenderer.idIfSet(e)}class="sd-rectangle" x="#{crisp(e.x)}" y="#{crisp(e.y)}" width="#{e.width}" height="#{e.height}" rx="#{e.rx}" ry="#{e.ry}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "opacity:#{e.opacity};stroke-width:#{e.strokeWidth};fill:#{e.fillColor}")}opacity="#{e.opacity}"></rect>"""
+        """<rect #{SVGRenderer.idIfSet(e)}class="sd-rectangle" x="#{crisp(e.x)}" y="#{crisp(e.y)}" width="#{e.width}" height="#{e.height}" rx="#{e.rx}" ry="#{e.ry}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "fill-opacity:#{e.opacity};stroke-opacity:#{e.opacity};stroke-width:#{e.strokeWidth};fill:#{e.fillColor}")}></rect>"""
       when 'text'
         transform = if (e.rotationAngle == 0)
           ""
         else
           """transform="rotate(#{e.rotationAngle},#{e.x},#{e.y})" """
-        """<text #{SVGRenderer.idIfSet(e)}class="sd-text" x="#{e.x}" y="#{e.y + e.fontSize * 0.35}" #{SVGRenderer.style(e)}text-anchor="#{e.textAnchor}" stroke="none" fill="#{e.strokeColor}" font-size="#{e.fontSize}px" font-family="#{e.fontFamily}" font-weight="#{e.fontWeight}" opacity="#{e.opacity}" #{transform}>#{e.text}</text>"""
+        """<text #{SVGRenderer.idIfSet(e)}class="sd-text" x="#{e.x}" y="#{e.y + e.fontSize * 0.35}" #{SVGRenderer.style(e, "fill-opacity:#{e.opacity};stroke:none;font-weight:#{e.fontWeight};font-family:#{e.fontFamily};font-size:#{e.fontSize}px;fill:#{e.strokeColor};text-anchor:#{e.textAnchor}")} #{transform}>#{e.text}</text>"""
       else
         console.log("Unhandled element type: #{e.type}")
 

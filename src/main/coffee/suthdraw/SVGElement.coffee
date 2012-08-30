@@ -5,7 +5,8 @@ class SVGElement extends suthdraw.ActiveElement
     @
 
   setOpacity: (opacity) ->
-    @element.style.opacity = opacity
+    @element.style['fill-opacity'] = opacity
+    @element.style['stroke-opacity'] = opacity
     @
 
   setRadius: (radius) ->
