@@ -50,7 +50,7 @@ root.suthdraw.Drawing = Drawing
 
 round = (x) -> Math.round(x)
 
-hasSVG = () -> root.SVGDocument?
+hasSVG = () -> document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1")
 
 hasVML = () -> document? && !hasSVG()
 
