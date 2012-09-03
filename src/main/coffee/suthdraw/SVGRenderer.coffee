@@ -38,7 +38,7 @@ class SVGRenderer extends suthdraw.Renderer
         html.push("""</g>""")
         html.join('')
       when 'line'
-        """<path #{SVGRenderer.idIfSet(e)}class="sd-line" stroke="#{e.strokeColor}" d="M#{crisp(e.x1)},#{crisp(e.y1)}L#{crisp(e.x2)},#{crisp(e.y2)}" stroke-width="#{e.strokeWidth}"#{SVGRenderer.style(e)}></path>"""
+        """<path #{SVGRenderer.idIfSet(e)}class="sd-line" stroke="#{e.strokeColor}" d="M#{crisp(e.x1)},#{crisp(e.y1)}L#{crisp(e.x2)},#{crisp(e.y2)}" stroke-width="#{e.strokeWidth}"#{SVGRenderer.style(e,"stroke-opacity:#{e.opacity};")}></path>"""
       when 'oval'
         """<ellipse #{SVGRenderer.idIfSet(e)}class="sd-oval" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" rx="#{e.rx}" ry="#{e.ry}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "fill-opacity:#{e.opacity};stroke-opacity:#{e.opacity};stroke-width:#{e.strokeWidth}")}"></circle>"""
       when 'path'

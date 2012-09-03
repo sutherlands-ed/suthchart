@@ -29,7 +29,8 @@ class SVGElement extends suthdraw.ActiveElement
       { left: @element.cx.baseVal.value, top: @element.cy.baseVal.value }
 
   setPosition: (left, top) ->
-    matrix = @element.transform.baseVal.getItem(0).setTranslate(left, top)
+    # @element.transform.baseVal.getItem(0).setTranslate(left, top)
+    @element.setAttribute('transform', "translate(#{left},#{top})")
     @
 
   getText: () ->

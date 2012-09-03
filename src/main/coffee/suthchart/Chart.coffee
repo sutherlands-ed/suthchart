@@ -36,12 +36,12 @@ class Chart extends suthdraw.Drawing
     g = @group("grid")
     # X Grid
     for x in @xAxis.minorSteps
-      g.add(@line(@sx(x), @sy(@yAxisMin), @sx(x), @sy(@yAxisMax)).withStrokeWidth(0.1))
+      g.add(@line(@sx(x), @sy(@yAxisMin), @sx(x), @sy(@yAxisMax)).withStrokeWidth(0.2).withOpacity(0.25))
     for x in @xAxis.majorSteps
       g.add(@line(@sx(x), @sy(@yAxisMin), @sx(x), @sy(@yAxisMax)).withStrokeWidth(0.2))
     # Y Grid
     for y in @yAxis.minorSteps
-      g.add(@line(@sx(@xAxisMin), @sy(y), @sx(@xAxisMax), @sy(y)).withStrokeWidth(0.1))
+      g.add(@line(@sx(@xAxisMin), @sy(y), @sx(@xAxisMax), @sy(y)).withStrokeWidth(0.2).withOpacity(0.25))
     for y in @yAxis.majorSteps
       g.add(@line(@sx(@xAxisMin), @sy(y), @sx(@xAxisMax), @sy(y)).withStrokeWidth(0.2))
     g
@@ -51,7 +51,7 @@ class Chart extends suthdraw.Drawing
     # X Axis
     g.add(@line(@sx(@xAxisMin), @sy(@yAxisMin), @sx(@xAxisMax), @sy(@yAxisMin)).withStrokeWidth(2))
     for x in @xAxis.minorSteps
-      g.add(@line(@sx(x), @sy(@yAxisMin)-2, @sx(x), @sy(@yAxisMin)+2))
+      g.add(@line(@sx(x), @sy(@yAxisMin)-2, @sx(x), @sy(@yAxisMin)+2).withOpacity(0.25))
     for x,i in @xAxis.majorSteps
       g.add(@line(@sx(x), @sy(@yAxisMin)-4, @sx(x), @sy(@yAxisMin)+4))
       g.add(@text(@sx(x), @sy(@yAxisMin) + 10, @xAxis.majorLabels[i]).withFont('Arial', 10).withStrokeColor('#888'))
@@ -59,7 +59,7 @@ class Chart extends suthdraw.Drawing
     # Y Axis
     g.add(@line(@sx(@xAxisMin), @sy(@yAxisMin), @sx(@xAxisMin), @sy(@yAxisMax)).withStrokeWidth(2))
     for y in @yAxis.minorSteps
-      g.add(@line(@sx(0)-2, @sy(y), @sx(0)+2, @sy(y)))
+      g.add(@line(@sx(0)-2, @sy(y), @sx(0)+2, @sy(y)).withOpacity(0.25))
     for y,i in @yAxis.majorSteps
       g.add(@line(@sx(@xAxisMin)-4, @sy(y), @sx(@xAxisMin)+4, @sy(y)))
       g.add(@text(@sx(@xAxisMin)-5, @sy(y), @yAxis.majorLabels[i]).withFont('Arial', 10).withStrokeColor('#888').withAnchoring('end'))
