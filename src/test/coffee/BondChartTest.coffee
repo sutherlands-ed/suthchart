@@ -90,8 +90,8 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
     false
   )
 
-  $('#graph').on('mouseenter mouseleave', '.sd-circle', (event) ->
-    e = chart.activeElement(this)
+  $('#graph').on('mouseenter mouseleave', '.sd-circle', (event) =>
+    e = chart.activeElement(event.target)
     i = e.id
     popupElement = $('.sd-group[data-id="popup"]')[0]
     popup        = chart.activeElement(popupElement)
@@ -105,7 +105,7 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
       chart.activeElement($(popupElement).find('.sd-text')[1]).setText(data[i][2])
       popup.show()
     else
-      e = chart.activeElement(this)
+      e = chart.activeElement(event.target)
       i = e.id
       popupElement = $('.sd-group[data-id="popup"]')[0]
       popup        = chart.activeElement(popupElement)
