@@ -76,8 +76,9 @@ class Chart extends suthdraw.Drawing
 
   strip: (number) -> parseFloat(number.toPrecision(12))
 
-  # Note that this function depends on jQuery!
-  enableZoom: (graphElement, redrawFunction) ->
+  # Note that this function depends on jQuery and must be called before the graph is rendered as it adds a hidden zoom
+  # rectangle to the graph before rendering.
+  enableZoom: (graphElement, redrawFunction) =>
     dragStart = undefined
 
     graphOffsetX = $(graphElement).offset().left
@@ -88,6 +89,10 @@ class Chart extends suthdraw.Drawing
       y = event.pageY - graphOffsetY
       [x,y]
 
+    # Create zoom rectangle...
+    zoomRectangle = @add(@rectangle(0,0,0,0).withStrokeWidth(2).withStrokeColor('blue').withFill('none').
+      withID('zoom-rectangle').hidden())
+
     $(graphElement).off('mousedown mousemove mouseup')
 
     $(graphElement).on('mousedown', (event) ->
@@ -96,12 +101,19 @@ class Chart extends suthdraw.Drawing
       dragStart = { x: x, y: y }
     )
 
-    $(graphElement).on('mousemove', (event) ->
+    $(graphElement).on('mousemove', (event) =>
       if dragStart?
         [x,y] = eventOffsets(event)
         dx = Math.abs(dragStart.x - x)
         dy = Math.abs(dragStart.y - y)
-        # if (dx + dy > 5) then # console.log("Dragging")
+        zae = @activeElement($(graphElement).find('*[data-id="zoom-rectangle"]')[0])
+        if (dx + dy > 5)
+          # We are now dragging so draw zoom rectangle...
+          zae.setPosition(dragStart.x, dragStart.y)
+          zae.setWidthHeight(dx, dy)
+          zae.show()
+        else
+          zae.hide()
       # On windows, the return of false here is essential to prevent elements of the graph looking drag selected
       false
     )
@@ -121,7 +133,7 @@ class Chart extends suthdraw.Drawing
           y1  = Math.min(dy1,dy2)
           y2  = Math.max(dy1,dy2)
           redrawFunction(x1,x2,y1,y2)
-          console.log("Drag area: #{dx1},#{dy1} - #{dx2},#{dy2}")
+          # console.log("Drag area: #{dx1},#{dy1} - #{dx2},#{dy2}")
         dragStart = undefined
     )
 

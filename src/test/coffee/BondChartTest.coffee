@@ -67,6 +67,9 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   endTime = new Date()
   console.log("Time to construct graph object: #{endTime - startTime}")
 
+  # Drag zoom
+  chart.enableZoom($('#graph')[0], drawGraph)
+
   document.getElementById('graph').innerHTML = chart.render()
 
   renderEndTime = new Date()
@@ -119,10 +122,6 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   $('#graph').on('click', (event) ->
     deselect(chart)
   )
-
-  # Drag zoom
-
-  chart.enableZoom($('#graph')[0], drawGraph)
 
   jQueryEndTime = new Date()
   console.log("Time to set up jQuery event handling: #{jQueryEndTime - domProcessingEndTime}")

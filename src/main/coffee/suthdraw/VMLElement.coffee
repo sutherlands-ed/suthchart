@@ -55,6 +55,11 @@ class VMLElement extends suthdraw.ActiveElement
       @element.style.top = top 
     @
 
+  setWidthHeight: (width, height) ->
+    @element.style.width = width
+    @element.style.height = height
+    @
+
   getText: () ->
     @element.getElementsByTagName('textpath')[0].string
 

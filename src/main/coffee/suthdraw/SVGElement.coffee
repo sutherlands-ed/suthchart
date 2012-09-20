@@ -33,6 +33,11 @@ class SVGElement extends suthdraw.ActiveElement
     @element.setAttribute('transform', "translate(#{left},#{top})")
     @
 
+  setWidthHeight: (width, height) ->
+    @element.setAttribute('width', width.toString())
+    @element.setAttribute('height', height.toString())
+    @
+
   getText: () ->
     @element.textContent
 

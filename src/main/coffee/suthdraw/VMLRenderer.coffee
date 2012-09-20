@@ -46,12 +46,18 @@ class VMLRenderer extends suthdraw.Renderer
         path = "m" + first + "l" + lines + "," + last + " e"
         """<v:shape #{VMLRenderer.idIfSet(e)}class="sd-path" #{VMLRenderer.style(e,"position:absolute;width:1px;height:1px;top:0px;left:0px")}coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill></v:fill></v:shape>"""
       when 'rectangle'
+        if e.fillColor == 'none'
+          fillString1 = " "
+          fillString2 = """<v:fill type="solid" opacity="0"></v:fill>"""
+        else 
+          fillString1 = """fillcolor="#{e.fillColor}" """
+          fillString2 = """<v:fill type="solid" opacity="#{e.opacity}"></v:fill>"""
         if (e.rx > 0 || e.ry > 0)
           r = (e.rx + e.ry) / 2
           arcsize = r / Math.min(e.width, e.height)
-          """<v:roundrect #{VMLRenderer.idIfSet(e)}class="sd-rectangle" #{VMLRenderer.style(e,"position:absolute;left:#{crisp(e.x)}px;top:#{crisp(e.y)}px;width:#{e.width}px;height:#{e.height}px")}strokecolor="#{e.strokeColor}" fillcolor="#{e.fillColor}" strokeweight="#{e.strokeWidth}px" arcsize="#{arcsize}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill type="solid" opacity="#{e.opacity}"></v:fill></v:roundrect>"""
+          """<v:roundrect #{VMLRenderer.idIfSet(e)}class="sd-rectangle" #{VMLRenderer.style(e,"position:absolute;left:#{crisp(e.x)}px;top:#{crisp(e.y)}px;width:#{e.width}px;height:#{e.height}px")}strokecolor="#{e.strokeColor}" #{fillString1} strokeweight="#{e.strokeWidth}px" arcsize="#{arcsize}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke>#{fillString2}</v:roundrect>"""
         else
-          """<v:rect #{VMLRenderer.idIfSet(e)}class="sd-rectangle" #{VMLRenderer.style(e,"position:absolute;left:#{crisp(e.x)}px;top:#{crisp(e.y)}px;width:#{e.width}px;height:#{e.height}px")}strokecolor="#{e.strokeColor}" fillcolor="#{e.fillColor}" strokeweight="#{e.strokeWidth}px"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill type="solid" opacity="#{e.opacity}"></v:fill></v:rect>"""
+          """<v:rect #{VMLRenderer.idIfSet(e)}class="sd-rectangle" #{VMLRenderer.style(e,"position:absolute;left:#{crisp(e.x)}px;top:#{crisp(e.y)}px;width:#{e.width}px;height:#{e.height}px")}strokecolor="#{e.strokeColor}" #{fillString1} strokeweight="#{e.strokeWidth}px"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke>#{fillString2}</v:rect>"""
       when 'text'
         if (e.rotationAngle == 0)
           """<v:shape #{VMLRenderer.idIfSet(e)}class="sd-text" coordsize="1,1" #{VMLRenderer.style(e,"position:absolute;width:1px;height:1px;top:0px;left:0px")}filled="t" fillcolor="#{e.strokeColor}" stroked="f" path="m#{Math.round(e.x - 1)},#{Math.round(e.y)}r1,0e"><v:stroke opacity="1" miterlimit="8"></v:stroke><v:textpath style="font-family=#{e.fontFamily};font-size:#{e.fontSize}px;font-weight:#{e.fontWeight};v-text-align:#{e.textAlign()};" on="t" string="#{e.text}"></v:textpath><v:path textpathok="t"></v:path><v:skew on="t" matrix="1,0,0,1,0,0" offset="0,0"></v:skew><v:fill type="solid"></v:fill></v:shape>"""
