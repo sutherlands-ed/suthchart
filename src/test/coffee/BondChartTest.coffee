@@ -52,6 +52,9 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   chart.add(chart.grid())
   chart.add(chart.axis())
 
+  # Highlighted bond
+  chart.add(chart.circle(0,0, dotSize*1.5).withStroke(1, 'white').withFill('red').withOpacity(1).withID('highlighted-bond').hidden())
+
   # Create a single manual popup for testing...
   popupX      = 640
   popupY      = 515
@@ -64,11 +67,11 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   popupGroup.add(chart.text(5, 25, "Royal Bank of Scotland").withFont('arial', 12).withStrokeColor('white').withAnchoring('start').withFontWeight('bold').withOpacity(0.75))
   chart.add(popupGroup)
 
-  endTime = new Date()
-  console.log("Time to construct graph object: #{endTime - startTime}")
-
   # Drag zoom
   chart.enableZoom($('#graph')[0], drawGraph)
+
+  endTime = new Date()
+  console.log("Time to construct graph object: #{endTime - startTime}")
 
   document.getElementById('graph').innerHTML = chart.render()
 
@@ -83,11 +86,23 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
   # console.log(chart.render())
   # console.log(chart)
 
+  highlightedBondElement = chart.activeElement($('.sd-circle[data-id="highlighted-bond"]')[0])
+
+  deselect = (chart) ->
+    selected = $('.sd-circle.selected')[0]
+    if selected?
+      olde = chart.activeElement(selected)
+      olde.removeClass('selected')
+      highlightedBondElement.hide()
+
   $('#graph').on('click', '.sd-circle', (event) ->
     e = chart.activeElement(this)
     deselect(chart)
-    window.x = e
-    e.setStrokeColor('red').setFillColor('red').setOpacity(0.75).addClass('selected')
+    position = e.getPosition()
+    x = position.left
+    y = position.top
+    highlightedBondElement.setPosition(x,y).show()
+    e.addClass('selected')
     i = e.id
     # console.log("clicked on bond #{data[i][0]} issued by #{data[i][2]}")
     false
@@ -95,7 +110,10 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
 
   $('#graph').on('mouseenter mouseleave', '.sd-circle', (event) =>
     e = chart.activeElement(event.target)
-    i = e.id
+    i = if (e.id == 'highlighted-bond')
+      selected = $('.sd-circle.selected')[0]
+      chart.activeElement(selected).id
+    else e.id
     popupElement = $('.sd-group[data-id="popup"]')[0]
     popup        = chart.activeElement(popupElement)
     if (event.type == 'mouseenter')
@@ -109,7 +127,6 @@ drawGraph = (xMin, xMax, yMin, yMax) =>
       popup.show()
     else
       e = chart.activeElement(event.target)
-      i = e.id
       popupElement = $('.sd-group[data-id="popup"]')[0]
       popup        = chart.activeElement(popupElement)
       popup.hide()
@@ -138,10 +155,4 @@ $.getJSON("../data/curves-2012-05-29.json", (d) ->
   downloadCount -= 1
   if downloadCount == 0 then drawGraph(0,50,0,30)
 )
-
-deselect = (chart) ->
-  selected = $('.sd-circle.selected')[0]
-  if selected?
-    olde = chart.activeElement(selected)
-    olde.setFillColor('#888').setStrokeColor('black').setStrokeWidth(1).setOpacity(0.5).setRadius(3).removeClass('selected')
 

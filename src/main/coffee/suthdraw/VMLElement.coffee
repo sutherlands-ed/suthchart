@@ -46,13 +46,15 @@ class VMLElement extends suthdraw.ActiveElement
 
   setPosition: (left, top) ->
     if @type == 'circle'
+      style = @element.style
       width = VMLElement.numberInString(style.width)
       height = VMLElement.numberInString(style.height)
-      @element.style.left = left - width * 0.5
-      @element.style.top = top - width * 0.5
+      style.left = left - width * 0.5
+      style.top = top - width * 0.5
     else
-      @element.style.left = left
-      @element.style.top = top 
+      style = @element.style
+      style.left = left
+      style.top = top 
     @
 
   setWidthHeight: (width, height) ->

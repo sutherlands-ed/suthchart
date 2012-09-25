@@ -5,7 +5,7 @@ class ActiveElement
     match = c.match(///sd\-.+///)?[0]
     if match?
       @type = match.substring(3)
-    @id = Number(element.getAttribute('data-id'))
+    @id = element.getAttribute('data-id')
 
   addClass: (className) ->
     c = @getClasses()
