@@ -80,7 +80,6 @@ class Chart extends suthdraw.Drawing
   # rectangle to the graph before rendering.
   enableZoom: (graphElement, redrawFunction) =>
     if $(graphElement).length == 0 then throw new Error("Graph element $('#{graphElement}') not found!")
-    throw new Error()
 
     dragStart = undefined
 
