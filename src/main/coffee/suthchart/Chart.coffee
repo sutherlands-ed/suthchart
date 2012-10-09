@@ -79,6 +79,9 @@ class Chart extends suthdraw.Drawing
   # Note that this function depends on jQuery and must be called before the graph is rendered as it adds a hidden zoom
   # rectangle to the graph before rendering.
   enableZoom: (graphElement, redrawFunction) =>
+    if $(graphElement).length == 0 then throw new Error("Graph element $('#{graphElement}') not found!")
+    throw new Error()
+
     dragStart = undefined
 
     graphOffsetX = $(graphElement).offset().left

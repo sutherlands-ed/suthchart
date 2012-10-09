@@ -21,15 +21,17 @@ class SVGRenderer extends suthdraw.Renderer
         """<circle #{SVGRenderer.idIfSet(e)}class="sd-circle" cx="#{crisp(e.x)}" cy="#{crisp(e.y)}" r="#{e.r}" fill="#{e.fillColor}" stroke="#{e.strokeColor}" #{SVGRenderer.style(e, "fill-opacity:#{e.opacity};stroke-opacity:#{e.opacity};stroke-width:#{e.strokeWidth}")}></circle>"""
       when 'curve'
         points = ([crisp(x[0]), crisp(x[1])] for x in e.points)
-        # Ensure that the number of points is always divisible by 3.
-        while (points.length % 3 != 0)
-          points.push(points[points.length - 1])
-        first  = _.first(points)
-        rest   = _.rest(points)
-        lines  = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
-        last   = _.last(points)
-        path   = "M" + first + "C" + lines + "," + last
-        """<path class="sd-curve" #{SVGRenderer.idIfSet(e)}fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}" #{SVGRenderer.style(e)}></path>"""
+        if (points.length < 2) then throw new Error("Attempt to draw curve with less than 2 points!")
+        else
+          # Ensure that the number of points is always divisible by 3.
+          while (points.length % 3 != 0)
+            points.push(points[points.length - 1])
+          first  = _.first(points)
+          rest   = _.rest(points)
+          lines  = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
+          last   = _.last(points)
+          path   = "M" + first + "C" + lines + "," + last
+          """<path class="sd-curve" #{SVGRenderer.idIfSet(e)}fill="none" stroke="#{e.strokeColor}" d="#{path}" stroke-width="#{e.strokeWidth}" #{SVGRenderer.style(e)}></path>"""
       when 'group'
         html = []
         html.push("""<g class="sd-group" #{SVGRenderer.idIfSet(e)}#{SVGRenderer.groupTransform(e.x, e.y)}#{SVGRenderer.style(e)}>""")

@@ -19,12 +19,14 @@ class VMLRenderer extends suthdraw.Renderer
         """<v:oval #{VMLRenderer.idIfSet(e)}class="sd-circle" #{VMLRenderer.style(e,"position:absolute;left:#{crisp(e.x-e.r)}px;top:#{crisp(e.y-e.r)}px;width:#{e.r * 2}px;height:#{e.r * 2}px")}strokecolor="#{e.strokeColor}" fillcolor="#{e.fillColor}"><v:stroke opacity="#{e.opacity}" miterlimit="8"></v:stroke><v:fill type="solid" opacity="#{e.opacity}"></v:fill></v:oval>"""
       when 'curve'
         points = ([crisp(x[0]), crisp(x[1])] for x in e.points)
-        first = _.first(points)
-        rest = _.rest(points)
-        lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
-        last = _.last(points)
-        path = "m" + first + "c" + lines + "," + last + " e"
-        """<v:shape class="sd-curve" #{VMLRenderer.idIfSet(e)}#{VMLRenderer.style(e,"position:absolute;width:1px;height:1px;top:0px;left:0px")}coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill></v:fill></v:shape>"""
+        if (points.length < 2) then throw new Error("Attempt to draw curve with less than 2 points!")
+        else
+          first = _.first(points)
+          rest = _.rest(points)
+          lines = _.chain(rest).map( (x) -> "," + x).reduce((x,y) -> x + y).value().substring(1)
+          last = _.last(points)
+          path = "m" + first + "c" + lines + "," + last + " e"
+          """<v:shape class="sd-curve" #{VMLRenderer.idIfSet(e)}#{VMLRenderer.style(e,"position:absolute;width:1px;height:1px;top:0px;left:0px")}coordsize="1,1" filled="f" stroked="t" strokecolor="#{e.strokeColor}" strokeweight="#{e.strokeWidth}px" path="#{path}"><v:stroke opacity="#{e.strokeWidth}" miterlimit="8"></v:stroke><v:fill></v:fill></v:shape>"""
       when 'group'
         html = []
         html.push("""<div class="sd-group" #{VMLRenderer.idIfSet(e)}#{VMLRenderer.style(e,"position:absolute;left:#{e.x}px;top:#{e.y}px;width:1px;height:1px")}>""")
