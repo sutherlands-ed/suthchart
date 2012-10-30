@@ -106,12 +106,14 @@ class Chart extends suthdraw.Drawing
     $(graphElement).on('mousemove', (event) =>
       if dragStart?
         [x,y] = eventOffsets(event)
-        dx = Math.abs(dragStart.x - x)
-        dy = Math.abs(dragStart.y - y)
+        dx = Math.abs(x - dragStart.x)
+        dy = Math.abs(y - dragStart.y)
         zae = @activeElement($(graphElement).find('*[data-id="zoom-rectangle"]')[0])
         if (dx + dy > 5)
           # We are now dragging so draw zoom rectangle...
-          zae.setPosition(dragStart.x, dragStart.y)
+          minx = Math.min(x,dragStart.x)
+          miny = Math.min(y,dragStart.y)
+          zae.setPosition(minx,miny)
           zae.setWidthHeight(dx, dy)
           zae.show()
         else
